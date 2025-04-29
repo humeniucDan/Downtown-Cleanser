@@ -1,0 +1,12 @@
+# std JetBrains
+**/.idea/
+
+# python 
+**/__pycache__/
+*.py[cod]
+
+# envs
+.env
+.env.*
+application.properties
+application-*.properties

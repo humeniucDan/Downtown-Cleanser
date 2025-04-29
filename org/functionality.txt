@@ -1,0 +1,17 @@
+Non-Functional(in order of importance):
+  - be as seamless ap posible, simplicity of use is THE most important thing (just upload a photo and the trash is no longer there)
+  - handle fraudulous uploads and accounts that upload such photos (restrict account ussage and make a reputation mechanic)
+  - handle non-detections (ask users to highlight whre the problem is and slelect form a list of 'handalable problems' and/or introduce a human in the loop)
+FE:
+  - take a or submit a photo and send the location along with the photo 
+  - see personal upload history
+  - get status updates on problems that were identified from uploaded photos (maybe through push notif)
+BE:
+  - handle:
+      - persistant storage
+      - endpoints for fe
+      - upload images to s3 and enqueue on redis
+      - dequeue and handle rsp
+AI:
+  - detect and clasify problems
+  - enqueue response with the output 
