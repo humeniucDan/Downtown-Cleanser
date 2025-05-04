@@ -14,6 +14,7 @@ class _MapPageState extends State<MapPage> {
   final Completer<GoogleMapController> _controller = Completer();
   LocationData? currentLocation;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
+  StreamSubscription<LocationData>? locationSubscription;
 
   void getCurrentLocation() async {
     Location location = Location();
@@ -33,7 +34,7 @@ class _MapPageState extends State<MapPage> {
     currentLocation = await location.getLocation();
     setState(() {});
     GoogleMapController googleMapController = await _controller.future;
-    location.onLocationChanged.listen((newLoc) {
+    locationSubscription = location.onLocationChanged.listen((newLoc) {
       currentLocation = newLoc;
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -61,9 +62,21 @@ class _MapPageState extends State<MapPage> {
   }
 
   @override
+  void dispose() {
+    locationSubscription?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Maps Sample App'), elevation: 2),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 254, 55, 108),
+        title: Center(
+          child: Image.asset("assets/logo-500x500.png", height: 200),
+        ),
+        elevation: 2,
+      ),
       body:
           currentLocation == null
               ? const Center(
@@ -108,14 +121,16 @@ class _MapPageState extends State<MapPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12.0),
             child: FloatingActionButton(
+              backgroundColor: Color(0xFFFF3066),
               heroTag: "photoBtn",
               onPressed: () {
                 Navigator.pushNamed(context, '/camera');
               },
-              child: const Icon(Icons.camera_alt_rounded),
+              child: const Icon(Icons.camera_alt_rounded, color: Colors.white),
             ),
           ),
           FloatingActionButton(
+            backgroundColor: Color(0xFFFF3066),
             heroTag: "locationBtn",
             onPressed: () {
               if (currentLocation != null) {
@@ -127,7 +142,7 @@ class _MapPageState extends State<MapPage> {
                 );
               }
             },
-            child: const Icon(Icons.my_location),
+            child: const Icon(Icons.my_location, color: Colors.white),
           ),
         ],
       ),

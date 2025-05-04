@@ -6,14 +6,14 @@ import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignupUserPage extends StatefulWidget {
-  const SignupUserPage({super.key});
+class SignupCompanyPage extends StatefulWidget {
+  const SignupCompanyPage({super.key});
 
   @override
-  State<SignupUserPage> createState() => _SignupUserPageState();
+  State<SignupCompanyPage> createState() => _SignupCompanyPageState();
 }
 
-class _SignupUserPageState extends State<SignupUserPage> {
+class _SignupCompanyPageState extends State<SignupCompanyPage> {
   @override
   //data for the API
   final TextEditingController _nameController = TextEditingController();
@@ -78,7 +78,6 @@ class _SignupUserPageState extends State<SignupUserPage> {
                     ),
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
-                        // Ensures full height
                         constraints: BoxConstraints(
                           minHeight: constraints.maxHeight,
                         ),
@@ -104,15 +103,15 @@ class _SignupUserPageState extends State<SignupUserPage> {
                                 padding: const EdgeInsets.only(bottom: 18.0),
                                 child: CustomInputField(
                                   controller: _nameController,
-                                  label: 'Full Name',
-                                  placeholder: "First name Last name",
+                                  label: 'Company Name',
+                                  placeholder: "Full Company Name",
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 18),
                                 child: CustomInputField(
                                   controller: _emailController,
-                                  label: 'Email',
+                                  label: 'Company Email',
                                   placeholder: "example@gmail.com",
                                 ),
                               ),
@@ -140,112 +139,132 @@ class _SignupUserPageState extends State<SignupUserPage> {
                                   onChanged:
                                       (role) =>
                                           setState(() => selectedRole = role),
-                                  label: "Role",
-                                  options: ["Sporter", "Coach"],
+                                  label: "What field is the company in?",
+                                  options: [
+                                    "Road maintenance",
+                                    " Electrical services",
+                                    "Plumbing & water systems",
+                                    "Waste management",
+                                    " Pest control",
+                                    "Other",
+                                  ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 34.0),
+                                padding: const EdgeInsets.only(bottom: 18.0),
+                                child: CustomInputField(
+                                  controller: _confirmPasswordController,
+                                  label:
+                                      'If other was selected please write here',
+                                  isPassword: false,
+                                  placeholder: "ex: Public safety equipment:",
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
                                 child: CustomButton(
                                   text: 'Sign Up',
                                   onPressed: () {} /*signup here*/,
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    color: Color(0xFFD8DADC),
-                                    height: 2,
-                                    width: screenWidth * 0.29,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 8.0,
-                                      right: 8.0,
-                                    ),
-                                    child: Text(
-                                      "Or Register with",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: const Color.fromARGB(
-                                          180,
-                                          0,
-                                          0,
-                                          0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    color: Color(0xFFD8DADC),
-                                    height: 2,
-                                    width: screenWidth * 0.29,
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     Container(
+                              //       color: Color(0xFFD8DADC),
+                              //       height: 2,
+                              //       width: screenWidth * 0.29,
+                              //     ),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(
+                              //         left: 8.0,
+                              //         right: 8.0,
+                              //       ),
+                              //       child: Text(
+                              //         "Or Register with",
+                              //         style: TextStyle(
+                              //           fontSize: 14,
+                              //           fontWeight: FontWeight.w400,
+                              //           color: const Color.fromARGB(
+                              //             180,
+                              //             0,
+                              //             0,
+                              //             0,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     Container(
+                              //       color: Color(0xFFD8DADC),
+                              //       height: 2,
+                              //       width: screenWidth * 0.29,
+                              //     ),
+                              //   ],
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(
+                              //     top: 16.0,
+                              //     bottom: 16.0,
+                              //   ),
+                              //   child: Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.spaceEvenly,
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       Container(
+                              //         height: 56,
+                              //         width: screenWidth * 0.28,
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(16),
+                              //           border: Border.all(color: Colors.grey),
+                              //         ),
+                              //         child: IconButton(
+                              //           onPressed: () {},
+                              //           icon: FaIcon(
+                              //             FontAwesomeIcons.facebook,
+                              //             size: 24,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Container(
+                              //         height: 56,
+                              //         width: screenWidth * 0.28,
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(16),
+                              //           border: Border.all(color: Colors.grey),
+                              //         ),
+                              //         child: IconButton(
+                              //           onPressed: () {},
+                              //           icon: FaIcon(
+                              //             FontAwesomeIcons.google,
+                              //             size: 24,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Container(
+                              //         height: 56,
+                              //         width: screenWidth * 0.28,
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(16),
+                              //           border: Border.all(color: Colors.grey),
+                              //         ),
+                              //         child: IconButton(
+                              //           onPressed: () {},
+                              //           icon: FaIcon(
+                              //             FontAwesomeIcons.apple,
+                              //             size: 24,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                  top: 16.0,
-                                  bottom: 16.0,
+                                  top: 8,
+                                  bottom: 16,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 56,
-                                      width: screenWidth * 0.28,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.facebook,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 56,
-                                      width: screenWidth * 0.28,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.google,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 56,
-                                      width: screenWidth * 0.28,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.apple,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8),
                                 child: Center(
                                   child: RichText(
                                     text: TextSpan(

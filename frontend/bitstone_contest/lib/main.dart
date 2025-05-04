@@ -1,4 +1,7 @@
-import 'package:bitstone_contest/home_page.dart';
+import 'package:bitstone_contest/login_page.dart';
+import 'package:bitstone_contest/signup_selection_page.dart';
+import 'package:bitstone_contest/signup_company_page.dart';
+import 'package:bitstone_contest/signup_user_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'map_page.dart';
@@ -26,9 +29,12 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomePage(),
+        '/': (context) => const LoginPage(),
+        '/signup_selection': (context) => const SingupSelection(),
         '/map': (context) => const MapPage(),
         '/camera': (context) => CameraPage(cameras: _cameras),
+        '/signup_user': (context) => SignupUserPage(),
+        '/signup_company': (context) => SignupCompanyPage(),
       },
     );
   }

@@ -2,14 +2,14 @@ import 'package:bitstone_contest/common/widgets/custom_button.dart';
 import 'package:bitstone_contest/common/widgets/select_register_box.dart';
 import 'package:flutter/material.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class SingupSelection extends StatefulWidget {
+  const SingupSelection({super.key});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<SingupSelection> createState() => _SingupSelectionState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
+class _SingupSelectionState extends State<SingupSelection> {
   int selectedIndex = -1;
 
   void selectBox(int index) {
@@ -71,7 +71,13 @@ class _WelcomePageState extends State<WelcomePage> {
               padding: const EdgeInsets.only(left: 2, right: 2, top: 16),
               child: CustomButton(
                 text: "Confirm",
-                onPressed: () {} /*navigate*/,
+                onPressed: () {
+                  if (selectedIndex == 1) {
+                    Navigator.pushNamed(context, '/signup_user');
+                  } else {
+                    Navigator.pushNamed(context, '/signup_company');
+                  }
+                },
               ),
             ),
           ],
