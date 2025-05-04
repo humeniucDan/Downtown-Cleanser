@@ -1,0 +1,33 @@
+name: bitstone_contest
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  camera: ^0.11.1
+  flutter:
+    sdk: flutter
+  font_awesome_flutter: ^10.8.0
+  google_fonts: ^6.2.1
+  google_maps_flutter: ^2.12.1
+  location: ^8.0.0
+  share_plus: ^11.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/current_location.png
+    - assets/institution.jpg
+    - assets/hero.jpg
+    - assets/hero1.png
+    - assets/institution1.png
+    - assets/institution_il.png
+    - assets/user_il.png
