@@ -1,0 +1,48 @@
+package com.example.be_bitstone.config;
+
+import com.example.be_bitstone.service.FilebaseService;
+import com.example.be_bitstone.service.RedisConsumerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.listener.PatternTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+
+@Configuration
+public class RedisConfig {
+    Logger logger = LoggerFactory.getLogger(RedisConfig.class);
+    private static final String ACK_QUEUE = "queue:ack";
+
+    private final FilebaseService filebaseService;
+
+    @Autowired
+    public RedisConfig(FilebaseService filebaseService) {
+        this.filebaseService = filebaseService;
+    }
+
+    @Bean
+    public RedisMessageListenerContainer container(RedisConnectionFactory redisConnectionFactory,
+                                                   MessageListenerAdapter listenerAdapter) {
+
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(redisConnectionFactory);
+        container.addMessageListener(listenerAdapter, new PatternTopic(ACK_QUEUE));
+
+        return container;
+    }
+
+    @Bean
+    public MessageListenerAdapter listenerAdapter() {
+        return new MessageListenerAdapter(new RedisConsumerService(filebaseService));
+    }
+
+    @Bean
+    public StringRedisTemplate template(RedisConnectionFactory redisConnectionFactory) {
+        return new StringRedisTemplate(redisConnectionFactory);
+    }
+}
