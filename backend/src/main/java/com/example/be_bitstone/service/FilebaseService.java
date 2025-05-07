@@ -1,93 +1,70 @@
 package com.example.be_bitstone.service;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 @Service
 public class FilebaseService {
-    Logger logger = LoggerFactory.getLogger(FilebaseService.class);
-    private final AmazonS3 amazonS3;
-
-    @Value("${aws.s3.bucket}")
-    private String bucket;
-
+    @Value("${filebase.endpoint}")
+    private String filebaseEndpoint;
+    @Value("${filebase.bucket.name}")
+    private String bucketName;
+    @Value("${filebase.gateway.name}")
+    private String gatewayNme;
     @Autowired
-    public FilebaseService(AmazonS3 amazonS3) {
-        this.amazonS3 = amazonS3;
-    }
+    private S3Client s3Client;
 
-    public boolean uploadFile(String name, MultipartFile file) {
-        try {
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(file.getSize());
-            metadata.setContentType(file.getContentType());
-
-            amazonS3.putObject(
-                    new PutObjectRequest(
-                            bucket,
-                            name,
-                            file.getInputStream(),
-                            metadata
-                    )
-            );
-
-            return true;
-        } catch (IOException e) {
-            return false;
+    public String uploadFile(MultipartFile file, String uploadName) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File name cannot be empty.");
         }
-    }
 
-    public List<Object[]> getFolder(String foldername) {
-        List<Object[]> folder = new ArrayList<>();
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            throw new IllegalArgumentException("File name cannot be empty.");
+        }
 
-        ListObjectsV2Request request = new ListObjectsV2Request()
-                .withBucketName(bucket)
-                .withPrefix(foldername);
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(uploadName)
+                .build();
 
-        var items = amazonS3.listObjectsV2(request);
+        String cid = "";
 
-        for(S3ObjectSummary item : items.getObjectSummaries()) {
-            String key = item.getKey();
-            byte[] content = getFile(key);
+        try {
+            PutObjectResponse putResp = s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+            System.out.println("File uploaded successfully.");
 
-            if(key != null && !key.equals(foldername)) {
-                String cleanId = key.substring(key.lastIndexOf("/") + 1, key.lastIndexOf(".json"));
-                folder.add(new Object[]{ content, cleanId });
+            HeadObjectRequest headRequest = HeadObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(uploadName)
+                    .build();
+
+            HeadObjectResponse headResponse = s3Client.headObject(headRequest);
+            Map<String, String> userMetadata = headResponse.metadata();
+
+            cid = userMetadata.get("cid");
+
+            if (cid == null || cid.isEmpty()) {
+                System.out.println("CID not found in metadata. Available metadata:");
+                userMetadata.forEach((key, value) -> System.out.println(key + " : " + value));
+            } else {
+                System.out.println("File Base CID: " + cid);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("!! ==== ERROR AWS: " + e.getMessage());
         }
 
-        return folder;
-    }
-
-    public byte[] getFile(String filename) {
-        S3Object s3Object = amazonS3.getObject(bucket, filename);
-
-        try(S3ObjectInputStream inputStream = s3Object.getObjectContent()) {
-            return inputStream.readAllBytes();
-        }
-        catch (IOException e) {
-            return null;
-        }
-    }
-
-    public boolean deleteFile(String filename) {
-        try {
-            amazonS3.deleteObject(new DeleteObjectRequest(bucket, filename));
-
-            return true;
-        }
-        catch (Exception e) {
-            return false;
-        }
+        return gatewayNme + cid;
     }
 }

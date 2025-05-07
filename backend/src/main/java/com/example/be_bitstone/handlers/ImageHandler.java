@@ -16,9 +16,10 @@ public class ImageHandler {
 
     public Boolean uploadImageForProcessing(MultipartFile image){
         String fileHash = FileHasher.hashMultipartFile(image) + ".png";
-        if(!filebaseService.uploadFile(fileHash, image)){
-            System.out.println("Hashing file failed!");
-            return false;
+        try{
+            System.out.println(filebaseService.uploadFile(image, fileHash));
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
         if(!redisProducerService.enqueue(fileHash)){
             System.out.println("Enqueueing file name failed!");

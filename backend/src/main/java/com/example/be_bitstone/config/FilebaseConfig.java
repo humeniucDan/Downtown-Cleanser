@@ -1,36 +1,37 @@
 package com.example.be_bitstone.config;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+
+import java.net.URI;
 
 @Configuration
 public class FilebaseConfig {
-
-    @Value("${aws.s3.accessKey}")
+    @Value("${aws.key.access}")
     private String accessKey;
 
-    @Value("${aws.s3.secretKey}")
-    private String secretKey;
+    @Value("${aws.key.secret}")
+    private String accessSecret;
 
-    @Value("${aws.s3.endpoint}")
-    private String endpoint;
-
-    @Value("${aws.s3.region}")
+    @Value("${aws.region}")
     private String region;
 
+    @Value("${filebase.endpoint}")
+    private String filebaseEndpoint;
+
     @Bean
-    public AmazonS3 amazonS3() {
-        System.setProperty("aws.java.v1.disableDeprecationAnnouncement", "true");
-        BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        return AmazonS3ClientBuilder.standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+    public S3Client s3Client() {
+        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, accessSecret);
+
+        return S3Client.builder()
+                .region(Region.of(region))
+                .endpointOverride(URI.create(filebaseEndpoint))
+                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                 .build();
     }
 }

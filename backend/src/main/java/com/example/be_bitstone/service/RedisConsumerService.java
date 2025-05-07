@@ -27,10 +27,10 @@ public class RedisConsumerService implements MessageListener {
         if(channel.equals(ACK_QUEUE)) {
             logger.info("Processing CV ACK " + messageReceived);
 
-            if(splitMessage[0].equals("e")) {
-                String cvFilename = "/" + splitMessage[1];
-                filebaseService.deleteFile(cvFilename);
-            }
+//            if(splitMessage[0].equals("e")) {
+//                String cvFilename = "/" + splitMessage[1];
+//                filebaseService.deleteFile(cvFilename);
+//            }
         }
     }
 }

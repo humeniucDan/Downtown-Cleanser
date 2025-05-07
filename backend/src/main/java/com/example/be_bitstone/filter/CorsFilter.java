@@ -1,6 +1,5 @@
-package com.example.be_bitstone.filters;
+package com.example.be_bitstone.filter;
 
-import jakarta.persistence.Column;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

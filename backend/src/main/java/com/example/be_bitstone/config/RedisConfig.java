@@ -18,12 +18,8 @@ public class RedisConfig {
     Logger logger = LoggerFactory.getLogger(RedisConfig.class);
     private static final String ACK_QUEUE = "queue:ack";
 
-    private final FilebaseService filebaseService;
-
     @Autowired
-    public RedisConfig(FilebaseService filebaseService) {
-        this.filebaseService = filebaseService;
-    }
+    private FilebaseService filebaseService;
 
     @Bean
     public RedisMessageListenerContainer container(RedisConnectionFactory redisConnectionFactory,

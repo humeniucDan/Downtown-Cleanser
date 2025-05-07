@@ -1,4 +1,4 @@
-package com.example.be_bitstone.model;
+package com.example.be_bitstone.entity;
 
 import lombok.*;
 
@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BoundingBox {
+public class Detection {
     int x1, y1, x2, y2, classId;
 }
