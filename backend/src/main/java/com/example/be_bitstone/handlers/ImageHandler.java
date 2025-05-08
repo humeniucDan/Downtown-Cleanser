@@ -34,10 +34,6 @@ public class ImageHandler {
             System.out.println(e.getMessage());
             return new ResponseEntity<>("Uploading file name failed!", HttpStatus.BAD_REQUEST);
         }
-        if(!redisProducerService.enqueue(fileHash)){
-            System.out.println("Enqueueing file name failed!");
-            return new ResponseEntity<>("Sending file name failed!", HttpStatus.BAD_REQUEST);
-        }
 
         Image newImage = new Image();
         newImage.setFileName(fileHash);
@@ -47,7 +43,13 @@ public class ImageHandler {
         newImage.setPostedAt(new Date());
         newImage.setPostedBy(userId);
 
-        imageService.save(newImage);
+        Image newInsertedImage = imageService.save(newImage);
+
+        /// TODO: handle failure of of enqueueing; probably by deleting teh entry or retying
+        if(!redisProducerService.enqueue(newInsertedImage.getId() + ":" + fileHash)){
+            System.out.println("Enqueueing file name failed!");
+            return new ResponseEntity<>("Sending file name failed!", HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>("Uploaded and send file successfully!", HttpStatus.OK);
     }

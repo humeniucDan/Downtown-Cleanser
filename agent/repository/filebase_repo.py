@@ -1,5 +1,7 @@
 import io
 import os
+
+import numpy as np
 from dotenv import load_dotenv
 import boto3
 from botocore.exceptions import ClientError
@@ -29,24 +31,22 @@ session = boto3.Session(
 s3 = session.client("s3",
         endpoint_url=os.getenv("S3_ENDPOINT_URL"))
 
-def get_object(key: str) -> str:
+def get_object(key: str) -> np.ndarray:
     try:
         resp = s3.get_object(Bucket=S3_BUCKET_NAME, Key=key)
         body = resp["Body"].read()
 
         io.BytesIO(body)
-
-        image = Image.open(io.BytesIO(body))
+        image = Image.open(io.BytesIO(body)).convert("RGB")
+        image_np = np.array(image)
 
         # Define local filename
-        filename = key.split("/")[-1]  # Use just the filename part
-        if not filename.lower().endswith(".png"):
-            filename += ".png"
+        # filename = key.split("/")[-1]  # Use just the filename part
+        # if not filename.lower().endswith(".png"):
+        #     filename += ".png"
+        # image.save(filename, format="PNG")
 
-        # Save image locally
-        image.save(filename, format="PNG")
-        print(f"Image saved as {filename}")
-        return filename
+        return image_np
 
     except ClientError as err:
         code = err.response["Error"]["Code"]

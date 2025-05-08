@@ -25,6 +25,10 @@ public class User {
     @Column(name = "password", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @Column(name = "is_admin")
+    private String isAdmin;
+    @Column(name = "is_rep")
+    private String isRep;
     @OneToMany
     @JoinColumn(name = "posted_by")
     private List<Image> images;
