@@ -2,13 +2,12 @@ package com.example.be_bitstone.dto;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserAuthDto {
-    private String email;
-    private String password;
+public class UserTokenDto {
+    Long id;
+    String email;
 }

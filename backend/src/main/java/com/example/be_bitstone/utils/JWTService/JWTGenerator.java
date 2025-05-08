@@ -31,6 +31,8 @@ public class JWTGenerator extends JWTUtil {
             field.setAccessible(false);
         }
         claims.remove("password");
+        claims.remove("images");
+        claims.remove("fullName");
         return claims;
     }
 }
