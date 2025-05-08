@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bitstone_contest/common/widgets/custom_report_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -77,7 +78,8 @@ class _MapPageState extends State<MapPage> {
         ),
         elevation: 2,
       ),
-      body:
+      body: Stack(
+        children: [
           currentLocation == null
               ? const Center(
                 child: Column(
@@ -92,6 +94,7 @@ class _MapPageState extends State<MapPage> {
               )
               : GoogleMap(
                 zoomControlsEnabled: false,
+                myLocationEnabled: true,
                 cloudMapId: "3862fa5c70e57954",
                 onMapCreated: (mapController) {
                   _controller.complete(mapController);
@@ -114,35 +117,19 @@ class _MapPageState extends State<MapPage> {
                   ),
                 },
               ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: FloatingActionButton(
-              backgroundColor: Color(0xFFFF3066),
-              heroTag: "photoBtn",
-              onPressed: () {
-                Navigator.pushNamed(context, '/camera');
-              },
-              child: const Icon(Icons.camera_alt_rounded, color: Colors.white),
-            ),
-          ),
-          FloatingActionButton(
-            backgroundColor: Color(0xFFFF3066),
-            heroTag: "locationBtn",
-            onPressed: () {
-              if (currentLocation != null) {
-                _cameraToPosition(
-                  LatLng(
-                    currentLocation!.latitude!,
-                    currentLocation!.longitude!,
-                  ),
-                );
-              }
-            },
-            child: const Icon(Icons.my_location, color: Colors.white),
+
+          Column(
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 20.0,
+                  left: 16,
+                  right: 16,
+                ),
+                child: Center(child: ReportButton()),
+              ),
+            ],
           ),
         ],
       ),
