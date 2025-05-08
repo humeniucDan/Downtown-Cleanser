@@ -23,19 +23,21 @@ public class Image {
     @Column(name = "posted_by", nullable = false)
     private Long postedBy;
     @Column(name = "is_processed", nullable = false)
-    private boolean isProcessed;
+    private boolean isProcessed = false;
     @Column(name = "processed_at")
-    private boolean processedAt;
+    private Date processedAt;
     @Column(name = "is_resolved")
-    private boolean resolved;
+    private boolean isResolved = false;
+    @Column(name = "resolved_at")
+    private Date resolvedAt;
     @Column(name = "raw_image_url")
     private String rawImageUrl;
     @Column(name = "annotated_image_url")
     private String annotatedImageUrl;
     @Column(name = "lat")
-    private Float lat;
+    private Double lat;
     @Column(name = "lng")
-    private Float lng;
+    private Double lng;
     @Column(name = "file_name")
     private String fileName;
     @OneToMany
