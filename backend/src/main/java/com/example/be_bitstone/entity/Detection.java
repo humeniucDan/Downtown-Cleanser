@@ -1,5 +1,6 @@
 package com.example.be_bitstone.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -7,6 +8,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+@Table(name = "detections")
 public class Detection {
-    int x1, y1, x2, y2, classId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "photo_id", nullable = false)
+    private Long photoId;
+    @Column(name = "x1")
+    private Integer x1;
+    @Column(name = "y1")
+    private Integer y1;
+    @Column(name = "x2")
+    private Integer x2;
+    @Column(name = "y2")
+    private Integer y2;
+    @Column(name = "class_id", nullable = false)
+    private Integer classId;
 }

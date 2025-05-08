@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/image")
 public class ImageController {
     @Autowired
     private ImageHandler imageHandler;
