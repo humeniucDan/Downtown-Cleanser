@@ -1,5 +1,6 @@
 package com.example.be_bitstone.utils.JWTService;
 
+import com.example.be_bitstone.dto.UserTokenDto;
 import com.example.be_bitstone.entity.User;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class JWTGenerator extends JWTUtil {
 
     private Map<String, Object> extractClaims(Object object) {
         Map<String, Object> claims = new HashMap<>();
-        Field[] fields = object.getClass().getDeclaredFields();
+        Field[] fields = UserTokenDto.class.getDeclaredFields();
 
         for (Field field : fields) {
             field.setAccessible(true);
@@ -30,7 +31,6 @@ public class JWTGenerator extends JWTUtil {
             }
             field.setAccessible(false);
         }
-        claims.remove("password");
         return claims;
     }
 }

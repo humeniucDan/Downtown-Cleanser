@@ -6,6 +6,8 @@ import com.example.be_bitstone.service.UserService;
 import com.example.be_bitstone.utils.JWTService.JWTGenerator;
 import com.example.be_bitstone.utils.JWTService.JWTParser;
 import com.example.be_bitstone.utils.PasswordHasher;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class AuthHandler {
     @Autowired
     private JWTParser jwtParser;
 
-    public ResponseEntity<String> login(UserAuthDto userAuthData){
+    public ResponseEntity<String> login(HttpServletResponse rsp, UserAuthDto userAuthData){
         Optional<User> optUser = userService.findByEmail(userAuthData.getEmail());
         if(optUser.isEmpty()){
             return new ResponseEntity<>("No such user!" , HttpStatus.BAD_REQUEST);
@@ -36,8 +38,11 @@ public class AuthHandler {
         }
 
         try {
-            return new ResponseEntity<>(jwtGenerator.generateToken(existingUser), HttpStatus.OK);
+            String token = jwtGenerator.generateToken(existingUser);
+            rsp.addCookie(new Cookie("jwToken", token));
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("Error logging in!", HttpStatus.BAD_REQUEST);
         }
     }
