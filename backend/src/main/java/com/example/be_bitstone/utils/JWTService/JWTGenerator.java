@@ -23,7 +23,7 @@ public class JWTGenerator extends JWTUtil {
 
     private Map<String, Object> extractClaims(Object object) {
         Map<String, Object> claims = new HashMap<>();
-        Field[] fields = object.getClass().getDeclaredFields();
+        Field[] fields = UserTokenDto.class.getDeclaredFields();
 
         for (Field field : fields) {
             field.setAccessible(true);
