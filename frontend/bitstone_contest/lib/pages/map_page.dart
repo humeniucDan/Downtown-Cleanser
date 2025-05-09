@@ -97,18 +97,26 @@ class _MapPageState extends State<MapPage> {
         ),
         elevation: 2,
       ),
+<<<<<<< HEAD
 <<<<<<<< HEAD:frontend/bitstone_contest/lib/pages/map_page.dart
       drawer: Drawer(
         backgroundColor: Colors.white,
+=======
+      drawer: Drawer(
+>>>>>>> 98aa545 (added login functionality + sidebar menu + web map)
         width: screenSize.width * 0.65,
         child: ListView(
           children: [
             SizedBox(
               height: 150,
               child: DrawerHeader(
+<<<<<<< HEAD
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 245, 78, 123),
                 ),
+=======
+                decoration: BoxDecoration(color: Color(0xFFFF3066)),
+>>>>>>> 98aa545 (added login functionality + sidebar menu + web map)
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Row(
@@ -123,11 +131,16 @@ class _MapPageState extends State<MapPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+<<<<<<< HEAD
                               userEmail ?? "Loading...",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
+=======
+                              ("Darius"),
+                              style: TextStyle(color: Colors.white),
+>>>>>>> 98aa545 (added login functionality + sidebar menu + web map)
                             ),
                             Text(
                               "Hero of the city",
@@ -141,6 +154,7 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             ),
+<<<<<<< HEAD
             ListTile(
               title: const Text(
                 "My profile",
@@ -172,6 +186,13 @@ class _MapPageState extends State<MapPage> {
 ========
       drawer: Drawer(width: screenSize.width * 0.60),
 >>>>>>>> b130098 (added web support):frontend/lib/pages/map_page.dart
+=======
+            ListTile(title: const Text("Reports")),
+            ListTile(title: const Text("Logout")),
+          ],
+        ),
+      ),
+>>>>>>> 98aa545 (added login functionality + sidebar menu + web map)
       body: Stack(
         children: [
           currentLocation == null
