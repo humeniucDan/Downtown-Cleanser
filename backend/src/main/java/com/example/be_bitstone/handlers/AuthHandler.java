@@ -42,7 +42,7 @@ public class AuthHandler {
             rsp.addCookie(new Cookie("jwToken", token));
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e){
-            System.out.println(e.getMessage()   );
+            System.out.println(e.getMessage());
             return new ResponseEntity<>("Error logging in!", HttpStatus.BAD_REQUEST);
         }
     }
