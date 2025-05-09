@@ -73,13 +73,55 @@ class _MapPageState extends State<MapPage> {
     Size screenSize = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color.fromARGB(255, 254, 55, 108),
         title: Center(
           child: Image.asset("assets/logo-500x500.png", height: 200),
         ),
         elevation: 2,
       ),
-      drawer: Drawer(width: screenSize.width * 0.60),
+      drawer: Drawer(
+        width: screenSize.width * 0.65,
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 150,
+              child: DrawerHeader(
+                decoration: BoxDecoration(color: Color(0xFFFF3066)),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(child: Icon(Icons.person)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ("Darius"),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Hero of the city",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            ListTile(title: const Text("Reports")),
+            ListTile(title: const Text("Logout")),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           currentLocation == null
