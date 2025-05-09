@@ -97,6 +97,7 @@ class _MapPageState extends State<MapPage> {
         ),
         elevation: 2,
       ),
+<<<<<<<< HEAD:frontend/bitstone_contest/lib/pages/map_page.dart
       drawer: Drawer(
         backgroundColor: Colors.white,
         width: screenSize.width * 0.65,
@@ -168,6 +169,9 @@ class _MapPageState extends State<MapPage> {
           ],
         ),
       ),
+========
+      drawer: Drawer(width: screenSize.width * 0.60),
+>>>>>>>> b130098 (added web support):frontend/lib/pages/map_page.dart
       body: Stack(
         children: [
           currentLocation == null

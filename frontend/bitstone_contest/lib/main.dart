@@ -1,10 +1,16 @@
+<<<<<<< HEAD:frontend/bitstone_contest/lib/main.dart
 import 'package:bitstone_contest/pages/history_page.dart';
+=======
+>>>>>>> b130098 (added web support):frontend/lib/main.dart
 import 'package:bitstone_contest/pages/login_page.dart';
 import 'package:bitstone_contest/pages/show_issues_page.dart';
 import 'package:bitstone_contest/pages/signup_selection_page.dart';
 import 'package:bitstone_contest/pages/signup_company_page.dart';
 import 'package:bitstone_contest/pages/signup_user_page.dart';
+<<<<<<< HEAD:frontend/bitstone_contest/lib/main.dart
 import 'package:bitstone_contest/services/auth_service.dart';
+=======
+>>>>>>> b130098 (added web support):frontend/lib/main.dart
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'pages/map_page.dart';
@@ -18,10 +24,14 @@ Future<void> main() async {
   if (!kIsWeb) {
     _cameras = await availableCameras();
   } // Load cameras BEFORE app starts
+<<<<<<< HEAD:frontend/bitstone_contest/lib/main.dart
 
   final bool isUserLoggedIn = await AuthService().isLoggedIn();
 
   runApp(MyApp(isLoggedIn: isUserLoggedIn));
+=======
+  runApp(const MyApp());
+>>>>>>> b130098 (added web support):frontend/lib/main.dart
 }
 
 class MyApp extends StatelessWidget {
@@ -45,10 +55,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         if (!kIsWeb)
+<<<<<<< HEAD:frontend/bitstone_contest/lib/main.dart
           if (isLoggedIn == false)
             '/': (context) => const LoginPage()
           else
             '/': (context) => const MapPage()
+=======
+          '/': (context) => const MapPage()
+>>>>>>> b130098 (added web support):frontend/lib/main.dart
         else
           '/': (context) => const ReportsMap(),
         '/signup_selection': (context) => const SingupSelection(),
