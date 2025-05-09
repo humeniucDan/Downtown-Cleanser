@@ -3,6 +3,7 @@ import 'package:bitstone_contest/pages/show_issues_page.dart';
 import 'package:bitstone_contest/pages/signup_selection_page.dart';
 import 'package:bitstone_contest/pages/signup_company_page.dart';
 import 'package:bitstone_contest/pages/signup_user_page.dart';
+import 'package:bitstone_contest/services/auth_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'pages/map_page.dart';
@@ -16,11 +17,15 @@ Future<void> main() async {
   if (!kIsWeb) {
     _cameras = await availableCameras();
   } // Load cameras BEFORE app starts
-  runApp(const MyApp());
+
+  final isUserLoggedIn = await AuthService().isLoggedIn();
+
+  runApp(MyApp(isLoggedIn: isUserLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         if (!kIsWeb)
-          '/': (context) => const MapPage()
+          if (isLoggedIn == false)
+            '/': (context) => const LoginPage()
+          else
+            '/': (context) => const MapPage()
         else
           '/': (context) => const ReportsMap(),
         '/signup_selection': (context) => const SingupSelection(),
