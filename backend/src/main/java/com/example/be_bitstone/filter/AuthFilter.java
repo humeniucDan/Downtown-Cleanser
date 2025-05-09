@@ -22,8 +22,8 @@ public class AuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String path = request.getRequestURI();            // e.g. "/signup" or "/login"
-        String context = request.getContextPath();        // e.g. "" or "/app"
+        String path = request.getRequestURI();
+        String context = request.getContextPath();
         String relativePath = path.substring(context.length());
 
         if(relativePath.equals("/login") || relativePath.equals("/signup")){

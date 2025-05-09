@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RedisConsumerService implements MessageListener {
-    private static final Logger logger = LoggerFactory.getLogger(RedisConsumerService.class);
     private static final String ACK_QUEUE = "queue:ack";
 
     private final FilebaseService filebaseService;
@@ -19,20 +18,16 @@ public class RedisConsumerService implements MessageListener {
     public RedisConsumerService(FilebaseService filebaseService) {
         this.filebaseService = filebaseService;
     }
-
-    /**
-     * Called when a message arrives. Use message.getChannel() to retrieve the actual channel.
-     */
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String channel = new String(message.getChannel());
         String messageBody = new String(message.getBody());
 
         if (ACK_QUEUE.equals(channel)) {
-            logger.info("Processing ACK on {}: {}", channel, messageBody);
             // TODO: delegate to filebaseService as needed
+            System.out.println("Received message on expected channel " +  channel + ":" + messageBody);
         } else {
-            logger.warn("Received message on unexpected channel {}: {}", channel, messageBody);
+            System.out.println("Received message on unexpected channel " +  channel + ":" + messageBody);
         }
     }
 }

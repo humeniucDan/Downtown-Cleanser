@@ -38,7 +38,7 @@ async def process_message(data: bytes):
 
     pg_repo.insert_detections_pg(results, image_id)
 
-    await client.lpush(ACK_QUEUE, f"{id}")
+    await client.publish(ACK_QUEUE, f"{image_id}")
 
 async def main():
     stop_event = asyncio.Event()
