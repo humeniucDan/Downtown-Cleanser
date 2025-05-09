@@ -22,7 +22,7 @@ public class ImageController {
     ResponseEntity<String> uploadNewImage(HttpServletRequest request, @RequestParam("image") MultipartFile image, @RequestParam("gpsData") String jsonGpsData){
 
         Long userId = ((UserTokenDto)request.getAttribute("authData")).getId();
-
+        
         GpsDto gpsData = new GpsDto(200.0, 200.0);
         try {
             gpsData = objectMapper.readValue(jsonGpsData, GpsDto.class);
