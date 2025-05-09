@@ -12,6 +12,9 @@ import java.util.Map;
 public class JWTGenerator extends JWTUtil {
     public String generateToken(User userData) {
         Map<String, Object> claims = extractClaims(userData);
+        claims.remove("images");
+        claims.remove("password");
+        claims.remove("fullName");
         return Jwts.builder()
                 .claims(claims)
                 .signWith(this.getSecretKey())
@@ -20,7 +23,7 @@ public class JWTGenerator extends JWTUtil {
 
     private Map<String, Object> extractClaims(Object object) {
         Map<String, Object> claims = new HashMap<>();
-        Field[] fields = UserTokenDto.class.getDeclaredFields();
+        Field[] fields = object.getClass().getDeclaredFields();
 
         for (Field field : fields) {
             field.setAccessible(true);
