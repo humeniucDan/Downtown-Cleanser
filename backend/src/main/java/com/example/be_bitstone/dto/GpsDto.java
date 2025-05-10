@@ -1,5 +1,6 @@
 package com.example.be_bitstone.dto;
 
+import jakarta.persistence.Embeddable;
 import lombok.*;
 
 @Getter

@@ -17,10 +17,23 @@ def insert_detections_pg(detections, photo_id):
         for det in detections:
             cur.execute(
                 """
-                INSERT INTO detections (class_id, photo_id, x1, x2, y1, y2)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                INSERT INTO detections (class_id, photo_id, x1, x2, y1, y2, class_name)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
-                (det['classId'], photo_id, int(det['x1']), int(det['x2']),
-                 int(det['y1']), int(det['y2']))
+                (det['class_id'], photo_id, int(det['x1']), int(det['x2']),
+                 int(det['y1']), int(det['y2']), det['class_name'])
             )
+        conn.commit()
+
+def update_image_processed(id: int, annotated_image_url: str):
+    conn = get_pg_connection()
+    with conn.cursor() as cur:
+        query = """
+            UPDATE images
+            SET is_processed = TRUE,
+                processed_at = NOW(),
+                annotated_image_url = %s
+            WHERE id = %s;
+        """
+        cur.execute(query, (annotated_image_url, id))
         conn.commit()

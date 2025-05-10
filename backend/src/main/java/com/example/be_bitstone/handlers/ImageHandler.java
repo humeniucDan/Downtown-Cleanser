@@ -29,7 +29,7 @@ public class ImageHandler {
         String fileHash = FileHasher.hashMultipartFile(image) + ".png";
         String rawFileUrl = "https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png";
         try{
-            rawFileUrl = filebaseService.uploadFile(image, fileHash);
+            rawFileUrl = filebaseService.uploadFile(image, "raw/"+fileHash);
         } catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>("Uploading file name failed!", HttpStatus.BAD_REQUEST);

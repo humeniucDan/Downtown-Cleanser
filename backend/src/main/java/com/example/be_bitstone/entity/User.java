@@ -29,6 +29,10 @@ public class User {
     private Boolean isAdmin = false;
     @Column(name = "is_rep")
     private Boolean isRep = false;
+    @Column(name = "rep_authority_id")
+    private Long repAuthorityId;
+    @Column(name = "score")
+    private Integer score = 0;
     @OneToMany
     @JoinColumn(name = "posted_by")
     private List<Image> images;

@@ -30,13 +30,13 @@ async def process_message(data: bytes):
     image_id:int =  int(split_text[0])
     filename = split_text[1]
 
-    image = filebase_repo.get_object(filename)
-    results = model.model.run_inference(image)
+    image = filebase_repo.get_object('raw/' + filename)
 
-    for result in results:
-        print(result['classId'])
+    results, annotated_image = model.model.run_inference(image)
+    annotated_image_url = filebase_repo.put_object('annotated/'+filename, annotated_image)
 
     pg_repo.insert_detections_pg(results, image_id)
+    pg_repo.update_image_processed(image_id, annotated_image_url)
 
     await client.publish(ACK_QUEUE, f"{image_id}")
 

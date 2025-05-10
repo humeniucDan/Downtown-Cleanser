@@ -8,6 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UserTokenDto {
-    Long id;
-    String email;
+    private Long id;
+    private String email;
+    private Boolean isAdmin;
+    private Boolean isRep;
+    private Long repAuthorityId;
 }

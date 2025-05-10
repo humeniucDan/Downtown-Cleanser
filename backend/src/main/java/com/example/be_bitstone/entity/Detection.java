@@ -28,8 +28,10 @@ public class Detection {
     private Integer y2;
     @Column(name = "class_id", nullable = false)
     private Integer classId;
+    @Column(name = "class_name")
+    private String className;
     @Column(name = "is_resolved")
-    private boolean isResolved = false;
+    private Boolean isResolved = false;
     @Column(name = "resolved_at")
     private Date resolvedAt;
 
