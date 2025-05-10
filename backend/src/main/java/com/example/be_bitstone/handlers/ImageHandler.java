@@ -46,6 +46,7 @@ public class ImageHandler {
         Image newInsertedImage = imageService.save(newImage);
 
         /// TODO: handle failure of of enqueueing; probably by deleting the entry or retying
+
         if(!redisProducerService.enqueue(newInsertedImage.getId() + ":" + fileHash)){
             System.out.println("Enqueueing file name failed!");
             return new ResponseEntity<>("Sending file name failed!", HttpStatus.BAD_REQUEST);

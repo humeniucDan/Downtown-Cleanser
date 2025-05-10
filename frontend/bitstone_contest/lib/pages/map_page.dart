@@ -98,16 +98,23 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
       ),
       drawer: Drawer(
+<<<<<<< HEAD
         backgroundColor: Colors.white,
+=======
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
         width: screenSize.width * 0.65,
         child: ListView(
           children: [
             SizedBox(
               height: 150,
               child: DrawerHeader(
+<<<<<<< HEAD
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 245, 78, 123),
                 ),
+=======
+                decoration: BoxDecoration(color: Color(0xFFFF3066)),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Row(
@@ -122,11 +129,16 @@ class _MapPageState extends State<MapPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+<<<<<<< HEAD
                               userEmail ?? "Loading...",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
+=======
+                              ("Darius"),
+                              style: TextStyle(color: Colors.white),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
                             ),
                             Text(
                               "Hero of the city",
@@ -140,6 +152,7 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             ),
+<<<<<<< HEAD
             ListTile(
               title: const Text(
                 "My profile",
@@ -165,6 +178,10 @@ class _MapPageState extends State<MapPage> {
                 Navigator.pushNamed(context, '/login');
               },
             ),
+=======
+            ListTile(title: const Text("Reports")),
+            ListTile(title: const Text("Logout")),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
           ],
         ),
       ),
