@@ -10,3 +10,6 @@
 .env.*
 application.properties
 application-*.properties
+
+*/datasets/
+*/training/
