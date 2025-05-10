@@ -26,10 +26,6 @@ public class Image {
     private boolean isProcessed = false;
     @Column(name = "processed_at")
     private Date processedAt;
-    @Column(name = "is_resolved")
-    private boolean isResolved = false;
-    @Column(name = "resolved_at")
-    private Date resolvedAt;
     @Column(name = "raw_image_url")
     private String rawImageUrl;
     @Column(name = "annotated_image_url")

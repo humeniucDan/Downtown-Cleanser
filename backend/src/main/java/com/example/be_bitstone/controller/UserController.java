@@ -36,8 +36,8 @@ public class UserController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<User> getUserByToken(HttpServletRequest req){
+    public ResponseEntity<?> getUserByToken(HttpServletRequest req){
         Long userId = ((UserTokenDto)req.getAttribute("authData")).getId();
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return userHandler.getById(userId);
     }
 }
