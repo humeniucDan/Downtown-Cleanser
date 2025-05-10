@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           if (isLoggedIn == false)
             '/': (context) => const LoginPage()
           else
-            '/': (context) => const MapPage()
+            '/': (context) => const LoginPage()
         else
           '/': (context) => const ReportsMap(),
         '/signup_selection': (context) => const SingupSelection(),

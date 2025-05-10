@@ -25,5 +25,6 @@ class UploadService {
     if (response.statusCode != 200) {
       throw Exception('Failed to upload image: ${response.statusCode}');
     }
+    print(response);
   }
 }
