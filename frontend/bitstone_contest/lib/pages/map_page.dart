@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:bitstone_contest/common/widgets/custom_report_button.dart';
+import 'package:bitstone_contest/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -12,10 +15,23 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  String? userEmail;
   final Completer<GoogleMapController> _controller = Completer();
   LocationData? currentLocation;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
   StreamSubscription<LocationData>? locationSubscription;
+
+  Future<String?> getUserNameFromToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+    if (token == null) return null;
+
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    setState(() {
+      userEmail = decodedToken['email'];
+    });
+    ;
+  }
 
   void getCurrentLocation() async {
     Location location = Location();
@@ -60,6 +76,7 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
     getCurrentLocation();
+    getUserNameFromToken();
   }
 
   @override
@@ -81,13 +98,16 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
       ),
       drawer: Drawer(
+        backgroundColor: Colors.white,
         width: screenSize.width * 0.65,
         child: ListView(
           children: [
             SizedBox(
               height: 150,
               child: DrawerHeader(
-                decoration: BoxDecoration(color: Color(0xFFFF3066)),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 245, 78, 123),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Row(
@@ -102,8 +122,11 @@ class _MapPageState extends State<MapPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ("Darius"),
-                              style: TextStyle(color: Colors.white),
+                              userEmail ?? "Loading...",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Text(
                               "Hero of the city",
@@ -117,8 +140,31 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             ),
-            ListTile(title: const Text("Reports")),
-            ListTile(title: const Text("Logout")),
+            ListTile(
+              title: const Text(
+                "My profile",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/report_history');
+              },
+              title: const Text(
+                "Report History",
+                style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
+              ),
+            ),
+            ListTile(
+              title: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                AuthService().logout();
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
           ],
         ),
       ),

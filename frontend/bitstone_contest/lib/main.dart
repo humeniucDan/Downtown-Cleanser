@@ -1,3 +1,4 @@
+import 'package:bitstone_contest/pages/history_page.dart';
 import 'package:bitstone_contest/pages/login_page.dart';
 import 'package:bitstone_contest/pages/show_issues_page.dart';
 import 'package:bitstone_contest/pages/signup_selection_page.dart';
@@ -18,13 +19,13 @@ Future<void> main() async {
     _cameras = await availableCameras();
   } // Load cameras BEFORE app starts
 
-  final isUserLoggedIn = await AuthService().isLoggedIn();
+  final bool isUserLoggedIn = await AuthService().isLoggedIn();
 
   runApp(MyApp(isLoggedIn: isUserLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
+  final bool? isLoggedIn;
   const MyApp({super.key, required this.isLoggedIn});
 
   @override
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           if (isLoggedIn == false)
             '/': (context) => const LoginPage()
           else
-            '/': (context) => const LoginPage()
+            '/': (context) => const MapPage()
         else
           '/': (context) => const ReportsMap(),
         '/signup_selection': (context) => const SingupSelection(),
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/camera': (context) => CameraPage(cameras: _cameras),
         '/signup_user': (context) => SignupUserPage(),
         '/signup_company': (context) => SignupCompanyPage(),
+        '/report_history': (context) => HistoryPage(),
       },
     );
   }

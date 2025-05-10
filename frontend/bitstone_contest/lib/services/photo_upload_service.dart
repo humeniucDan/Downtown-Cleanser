@@ -14,7 +14,7 @@ class UploadService {
     }
     var request =
         http.MultipartRequest('POST', uri)
-          ..headers['Authorization'] = 'Bearer $token'
+          ..headers['Cookie'] = 'jwToken=$token'
           ..fields['gpsData'] = jsonEncode(gpsData.toJson())
           ..files.add(
             await http.MultipartFile.fromPath('image', imageFile.path),
@@ -25,6 +25,5 @@ class UploadService {
     if (response.statusCode != 200) {
       throw Exception('Failed to upload image: ${response.statusCode}');
     }
-    print(response);
   }
 }
