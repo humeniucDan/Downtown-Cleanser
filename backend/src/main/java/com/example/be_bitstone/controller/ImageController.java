@@ -21,6 +21,10 @@ public class ImageController {
     @PostMapping(value = "/send", consumes = "multipart/form-data")
     ResponseEntity<String> uploadNewImage(HttpServletRequest request, @RequestParam("image") MultipartFile image, @RequestParam("gpsData") String jsonGpsData){
         Long userId = ((UserTokenDto)request.getAttribute("authData")).getId();
+<<<<<<< HEAD
+=======
+        
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
         GpsDto gpsData = new GpsDto(200.0, 200.0);
         try {
             gpsData = objectMapper.readValue(jsonGpsData, GpsDto.class);

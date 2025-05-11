@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'package:bitstone_contest/common/widgets/custom_report_button.dart';
+<<<<<<< HEAD
 import 'package:bitstone_contest/models/photo_model.dart';
 import 'package:bitstone_contest/pages/view_a_report_page.dart';
 import 'package:bitstone_contest/services/auth_service.dart';
 import 'package:bitstone_contest/services/user_service.dart';
+=======
+import 'package:bitstone_contest/services/auth_service.dart';
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -23,6 +27,7 @@ class _MapPageState extends State<MapPage> {
   LocationData? currentLocation;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
   StreamSubscription<LocationData>? locationSubscription;
+<<<<<<< HEAD
   Set<Marker> _markers = {};
   List<PhotoModel> _userPhotos = [];
 
@@ -87,6 +92,8 @@ class _MapPageState extends State<MapPage> {
       });
     }
   }
+=======
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
 
   Future<String?> getUserNameFromToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -165,16 +172,33 @@ class _MapPageState extends State<MapPage> {
         elevation: 2,
       ),
       drawer: Drawer(
+<<<<<<< HEAD
         backgroundColor: Colors.white,
+=======
+<<<<<<< HEAD
+        backgroundColor: Colors.white,
+=======
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
         width: screenSize.width * 0.65,
         child: ListView(
           children: [
             SizedBox(
               height: 150,
               child: DrawerHeader(
+<<<<<<< HEAD
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 245, 78, 123),
                 ),
+=======
+<<<<<<< HEAD
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 245, 78, 123),
+                ),
+=======
+                decoration: BoxDecoration(color: Color(0xFFFF3066)),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: Row(
@@ -189,11 +213,22 @@ class _MapPageState extends State<MapPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                               userEmail ?? "Loading...",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
+<<<<<<< HEAD
+=======
+=======
+                              ("Darius"),
+                              style: TextStyle(color: Colors.white),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                             ),
                             Text(
                               "Hero of the city",
@@ -207,10 +242,18 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             ),
+<<<<<<< HEAD
             ListTile(
               title: const Text(
                 "My profile",
                 style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
+=======
+<<<<<<< HEAD
+            ListTile(
+              title: const Text(
+                "My profile",
+                style: TextStyle(color: Colors.white),
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
               ),
             ),
             ListTile(
@@ -225,13 +268,24 @@ class _MapPageState extends State<MapPage> {
             ListTile(
               title: const Text(
                 "Logout",
+<<<<<<< HEAD
                 style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
+=======
+                style: TextStyle(color: Colors.white),
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
               ),
               onTap: () {
                 AuthService().logout();
                 Navigator.pushNamed(context, '/login');
               },
             ),
+<<<<<<< HEAD
+=======
+=======
+            ListTile(title: const Text("Reports")),
+            ListTile(title: const Text("Logout")),
+>>>>>>> 2f5e11a7356b1f0617ab9c515c118aab27e3a88a
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
           ],
         ),
       ),
@@ -253,9 +307,14 @@ class _MapPageState extends State<MapPage> {
                 zoomControlsEnabled: false,
                 myLocationEnabled: true,
                 cloudMapId: "3862fa5c70e57954",
+<<<<<<< HEAD
                 onMapCreated: (mapController) async {
                   _controller.complete(mapController);
                   await _loadUserPhotos();
+=======
+                onMapCreated: (mapController) {
+                  _controller.complete(mapController);
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                 },
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
@@ -264,7 +323,20 @@ class _MapPageState extends State<MapPage> {
                   ),
                   zoom: 16.0,
                 ),
+<<<<<<< HEAD
                 markers: _markers,
+=======
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("current"),
+                    icon: currentLocationIcon,
+                    position: LatLng(
+                      currentLocation!.latitude!,
+                      currentLocation!.longitude!,
+                    ),
+                  ),
+                },
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
               ),
 
           Column(

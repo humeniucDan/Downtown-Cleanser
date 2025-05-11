@@ -20,7 +20,6 @@ Future<void> main() async {
   } // Load cameras BEFORE app starts
 
   final bool isUserLoggedIn = await AuthService().isLoggedIn();
-
   runApp(MyApp(isLoggedIn: isUserLoggedIn));
 }
 

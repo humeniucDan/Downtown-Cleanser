@@ -96,6 +96,7 @@ class _CameraPageState extends State<CameraPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Take a Photo')),
+<<<<<<< HEAD
       backgroundColor: Color.fromARGB(255, 245, 78, 123),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -136,12 +137,36 @@ class _CameraPageState extends State<CameraPage> {
                     ),
                   ),
                   ElevatedButton(
+=======
+      body:
+          photoFile == null
+              ? CameraPreview(controller)
+              : Image.file(photoFile!),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children:
+            photoFile == null
+                ? <Widget>[
+                  FloatingActionButton(
+                    onPressed: takePhoto,
+                    child: const Icon(Icons.camera),
+                  ),
+                ]
+                : <Widget>[
+                  FloatingActionButton(
+                    onPressed: deletePhoto,
+                    child: const Icon(Icons.delete),
+                    backgroundColor: Colors.grey,
+                  ),
+                  FloatingActionButton(
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                     onPressed: _isUploading ? null : uploadPhoto,
                     child:
                         _isUploading
                             ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
+<<<<<<< HEAD
                             : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,6 +175,9 @@ class _CameraPageState extends State<CameraPage> {
                                 const Icon(Icons.send),
                               ],
                             ),
+=======
+                            : const Icon(Icons.send),
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
                   ),
                 ],
       ),

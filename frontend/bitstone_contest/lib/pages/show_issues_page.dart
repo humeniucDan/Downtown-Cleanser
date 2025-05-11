@@ -1,6 +1,9 @@
 import 'dart:async';
 
+<<<<<<< HEAD
 import 'package:bitstone_contest/services/auth_service.dart';
+=======
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -74,7 +77,10 @@ class _ReportsMapState extends State<ReportsMap> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     Size screenSize = MediaQuery.sizeOf(context);
+=======
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 254, 55, 108),
@@ -83,6 +89,7 @@ class _ReportsMapState extends State<ReportsMap> {
         ),
         elevation: 2,
       ),
+<<<<<<< HEAD
       drawer: Drawer(
         backgroundColor: Colors.white,
         width: screenSize.width * 0.65,
@@ -154,6 +161,8 @@ class _ReportsMapState extends State<ReportsMap> {
           ],
         ),
       ),
+=======
+>>>>>>> bb0a26e76af0f13a6a28c67f5c542c2695f3b361
       body: Stack(
         children: [
           currentLocation == null
