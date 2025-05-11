@@ -6,6 +6,7 @@ class DetectionModel {
   final int? x2;
   final int? y2;
   final int classId;
+  final String className;
 
   DetectionModel({
     required this.id,
@@ -15,6 +16,7 @@ class DetectionModel {
     this.x2,
     this.y2,
     required this.classId,
+    required this.className,
   });
 
   factory DetectionModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class DetectionModel {
       x2: json['x2'],
       y2: json['y2'],
       classId: json['classId'],
+      className: json['className'],
     );
   }
 
@@ -38,6 +41,7 @@ class DetectionModel {
       'x2': x2,
       'y2': y2,
       'classId': classId,
+      'className': className,
     };
   }
 }

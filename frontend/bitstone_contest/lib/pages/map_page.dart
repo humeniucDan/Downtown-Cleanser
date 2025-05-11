@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:bitstone_contest/common/widgets/custom_report_button.dart';
+import 'package:bitstone_contest/models/photo_model.dart';
+import 'package:bitstone_contest/pages/view_a_report_page.dart';
 import 'package:bitstone_contest/services/auth_service.dart';
+import 'package:bitstone_contest/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -20,6 +23,70 @@ class _MapPageState extends State<MapPage> {
   LocationData? currentLocation;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
   StreamSubscription<LocationData>? locationSubscription;
+  Set<Marker> _markers = {};
+  List<PhotoModel> _userPhotos = [];
+
+  Future<void> _loadUserPhotos() async {
+    //mock json for testing purpose
+    final mockJson = {
+      "id": 1,
+      "postedAt": "2025-05-10T22:37:45.483+00:00",
+      "postedBy": 1,
+      "processedAt": "2025-05-10T22:37:56.524+00:00",
+      "rawImageUrl":
+          "https://compatible-amaranth-antelope.myfilebase.com/ipfs/QmT7UMmE3tqLuWBuikh4wFqL21174FCpmN34z1xyyyD7YT",
+      "annotatedImageUrl":
+          "https://compatible-amaranth-antelope.myfilebase.com/ipfs/QmZwy7JZ5cMSQ4w6x1XpCke7yegrvJ1eYKemayuACwPmBC",
+      "lat": 10.0,
+      "lng": 20.0,
+      "fileName":
+          "e08a8c1e42cbb2954a93a9e9ce799ca17350152d3bc2e688287cfd694d4c173a.png",
+      "detections": [
+        {
+          "id": 1,
+          "photoId": 1,
+          "x1": 449,
+          "y1": 690,
+          "x2": 740,
+          "y2": 1062,
+          "classId": 9,
+          "className": "damaged_street_lights",
+          "isResolved": null,
+          "resolvedAt": null,
+        },
+      ],
+      "processed": true,
+    };
+
+    final user = await UserService().getCurrentUser();
+    if (user != null && user.images.isNotEmpty) {
+      setState(() {
+        _userPhotos = user.images;
+        _userPhotos.add(PhotoModel.fromJson(mockJson));
+        _markers =
+            _userPhotos
+                .where((photo) => photo.lat != null && photo.lng != null)
+                .map(
+                  (photo) => Marker(
+                    markerId: MarkerId(photo.id.toString()),
+                    position: LatLng(photo.lat!, photo.lng!),
+                    infoWindow: InfoWindow(
+                      title: "View Photo",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewReport(photo: photo),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                )
+                .toSet();
+      });
+    }
+  }
 
   Future<String?> getUserNameFromToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -143,7 +210,7 @@ class _MapPageState extends State<MapPage> {
             ListTile(
               title: const Text(
                 "My profile",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
               ),
             ),
             ListTile(
@@ -158,7 +225,7 @@ class _MapPageState extends State<MapPage> {
             ListTile(
               title: const Text(
                 "Logout",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
               ),
               onTap: () {
                 AuthService().logout();
@@ -186,8 +253,9 @@ class _MapPageState extends State<MapPage> {
                 zoomControlsEnabled: false,
                 myLocationEnabled: true,
                 cloudMapId: "3862fa5c70e57954",
-                onMapCreated: (mapController) {
+                onMapCreated: (mapController) async {
                   _controller.complete(mapController);
+                  await _loadUserPhotos();
                 },
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
@@ -196,16 +264,7 @@ class _MapPageState extends State<MapPage> {
                   ),
                   zoom: 16.0,
                 ),
-                markers: {
-                  Marker(
-                    markerId: const MarkerId("current"),
-                    icon: currentLocationIcon,
-                    position: LatLng(
-                      currentLocation!.latitude!,
-                      currentLocation!.longitude!,
-                    ),
-                  ),
-                },
+                markers: _markers,
               ),
 
           Column(

@@ -96,34 +96,60 @@ class _CameraPageState extends State<CameraPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Take a Photo')),
-      body:
-          photoFile == null
-              ? CameraPreview(controller)
-              : Image.file(photoFile!),
+      backgroundColor: Color.fromARGB(255, 245, 78, 123),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: ClipRRect(
+          borderRadius: BorderRadiusDirectional.circular(12),
+
+          child:
+              photoFile == null
+                  ? CameraPreview(controller)
+                  : Image.file(photoFile!),
+        ),
+      ),
+
       floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children:
             photoFile == null
                 ? <Widget>[
-                  FloatingActionButton(
+                  ElevatedButton(
                     onPressed: takePhoto,
-                    child: const Icon(Icons.camera),
+                    child: Row(
+                      children: [
+                        const Text("Take a photo"),
+                        const Icon(Icons.camera),
+                      ],
+                    ),
                   ),
                 ]
                 : <Widget>[
-                  FloatingActionButton(
+                  ElevatedButton(
                     onPressed: deletePhoto,
-                    child: const Icon(Icons.delete),
-                    backgroundColor: Colors.grey,
+                    child: Row(
+                      children: [
+                        const Text("Delete photo"),
+                        const Icon(Icons.delete),
+                      ],
+                    ),
                   ),
-                  FloatingActionButton(
+                  ElevatedButton(
                     onPressed: _isUploading ? null : uploadPhoto,
                     child:
                         _isUploading
                             ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                            : const Icon(Icons.send),
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text("Send for processing"),
+                                const Icon(Icons.send),
+                              ],
+                            ),
                   ),
                 ],
       ),
