@@ -1,7 +1,10 @@
 package com.example.be_bitstone.handlers;
 
-import com.example.be_bitstone.dto.UserAuthDto;
+import com.example.be_bitstone.dto.UserLoginDto;
+import com.example.be_bitstone.dto.UserSignupDto;
+import com.example.be_bitstone.entity.Authority;
 import com.example.be_bitstone.entity.User;
+import com.example.be_bitstone.service.AuthorityService;
 import com.example.be_bitstone.service.UserService;
 import com.example.be_bitstone.utils.JWTService.JWTGenerator;
 import com.example.be_bitstone.utils.JWTService.JWTParser;
@@ -20,13 +23,13 @@ public class AuthHandler {
     @Autowired
     private UserService userService;
     @Autowired
+    private AuthorityService authorityService;
+    @Autowired
     private PasswordHasher passwordHasher;
     @Autowired
     private JWTGenerator jwtGenerator;
-    @Autowired
-    private JWTParser jwtParser;
 
-    public ResponseEntity<String> login(HttpServletResponse rsp, UserAuthDto userAuthData){
+    public ResponseEntity<String> login(HttpServletResponse rsp, UserLoginDto userAuthData){
         Optional<User> optUser = userService.findByEmail(userAuthData.getEmail());
         if(optUser.isEmpty()){
             return new ResponseEntity<>("No such user!" , HttpStatus.BAD_REQUEST);
@@ -47,10 +50,28 @@ public class AuthHandler {
         }
     }
 
-    public ResponseEntity<?> signup(User user){
+    public ResponseEntity<?> signup(UserSignupDto userSignupData){
         try {
-            user.setPassword(passwordHasher.hashPassword(user.getPassword())); // make this not be a one-liner
-            return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
+            userSignupData.setPassword(passwordHasher.hashPassword(userSignupData.getPassword())); // make this not be a one-liner
+
+            User newUser = new User();
+            newUser.setEmail(userSignupData.getEmail());
+            newUser.setPassword(userSignupData.getPassword());
+            newUser.setFullName(userSignupData.getFullName());
+
+            if(userSignupData.getRepCode() == null){
+                return new ResponseEntity<>(userService.save(newUser), HttpStatus.OK);
+            }
+
+            Optional<Authority> optAuthority = authorityService.findByRepCode(userSignupData.getRepCode());
+            if(optAuthority.isPresent()){
+                newUser.setIsRep(true);
+                newUser.setRepAuthorityId(optAuthority.get().getId());
+            } else {
+                return new ResponseEntity<>("No such authority!", HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(userService.save(newUser), HttpStatus.OK);
         } catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>("Error creating new user!", HttpStatus.OK);

@@ -37,6 +37,6 @@ public class Image {
     @Column(name = "file_name")
     private String fileName;
     @OneToMany
-    @JoinColumn(name = "photo_id")
+    @JoinColumn(name = "image_id")
     private List<Detection> detections;
 }

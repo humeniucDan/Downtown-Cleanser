@@ -7,6 +7,7 @@ import com.example.be_bitstone.service.FilebaseService;
 import com.example.be_bitstone.service.ImageService;
 import com.example.be_bitstone.service.RedisProducerService;
 import com.example.be_bitstone.utils.FileHasher;
+import com.example.be_bitstone.utils.ImageResizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ public class ImageHandler {
     private FilebaseService filebaseService;
     @Autowired
     private RedisProducerService redisProducerService;
-
     @Autowired
     private ImageService imageService;
 
@@ -29,7 +29,8 @@ public class ImageHandler {
         String fileHash = FileHasher.hashMultipartFile(image) + ".png";
         String rawFileUrl = "https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png";
         try{
-            rawFileUrl = filebaseService.uploadFile(image, "raw/"+fileHash);
+            byte[] imageBytes = ImageResizer.resizeMultipartFile(image, 640);
+            rawFileUrl = filebaseService.uploadFile(imageBytes, "raw/"+fileHash);
         } catch (Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>("Uploading file name failed!", HttpStatus.BAD_REQUEST);

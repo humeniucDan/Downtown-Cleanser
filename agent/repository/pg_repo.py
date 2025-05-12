@@ -17,7 +17,7 @@ def insert_detections_pg(detections, photo_id):
         for det in detections:
             cur.execute(
                 """
-                INSERT INTO detections (class_id, photo_id, x1, x2, y1, y2, class_name)
+                INSERT INTO detections (class_id, image_id, x1, x2, y1, y2, class_name)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 (det['class_id'], photo_id, int(det['x1']), int(det['x2']),

@@ -16,6 +16,7 @@ public class UserService {
     public User save(User user){
         return userRepository.save(user);
     }
+
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
@@ -26,5 +27,9 @@ public class UserService {
 
     public List<User> findAllUsers(){
         return userRepository.findAll();
+    }
+
+    public List<User> findAllByDescScore(){
+        return userRepository.findAllByOrderByScoreDesc();
     }
 }

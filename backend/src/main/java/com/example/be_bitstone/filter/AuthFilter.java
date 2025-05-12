@@ -1,6 +1,5 @@
 package com.example.be_bitstone.filter;
 
-import com.example.be_bitstone.dto.UserAuthDto;
 import com.example.be_bitstone.dto.UserTokenDto;
 import com.example.be_bitstone.utils.JWTService.JWTParser;
 import jakarta.servlet.FilterChain;

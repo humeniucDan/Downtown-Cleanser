@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -17,4 +18,8 @@ public class ImageService {
         return imageRepository.save(image);
     }
     public List<Image> findAllWithDetectionsClassId(Integer classId){return imageRepository.findAllWithDetectionsClassId(classId);}
+
+    public Optional<Image> findById(Long imageId) {
+        return imageRepository.findById(imageId);
+    }
 }

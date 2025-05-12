@@ -16,8 +16,8 @@ public class Detection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "photo_id", nullable = false)
-    private Long photoId;
+    @Column(name = "image_id", nullable = false)
+    private Long imageId;
     @Column(name = "x1")
     private Integer x1;
     @Column(name = "y1")

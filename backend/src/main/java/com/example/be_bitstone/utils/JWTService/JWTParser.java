@@ -24,6 +24,8 @@ public class JWTParser extends JWTUtil {
         UserTokenDto user = new UserTokenDto();
         user.setId(claims.get("id", Long.class));
         user.setEmail(claims.get("email", String.class));
+        user.setIsRep(claims.get("isRep", Boolean.class));
+        user.setRepAuthorityId(claims.get("repAuthorityId", Long.class));
 
         return user;
     }

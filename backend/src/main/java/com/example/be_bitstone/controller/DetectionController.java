@@ -1,6 +1,8 @@
 package com.example.be_bitstone.controller;
 
+import com.example.be_bitstone.dto.UserTokenDto;
 import com.example.be_bitstone.handlers.DetectionHandler;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +16,8 @@ public class DetectionController {
     @Autowired
     private DetectionHandler detectionHandler;
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> updateDetection(@PathVariable Long id){
-//        return detectionHandler.
-//    }
+    @PutMapping("/resolved/{id}")
+    public ResponseEntity<?> markDetectionResolved(HttpServletRequest req, @PathVariable Long id){
+        return detectionHandler.markDetectionResolved((UserTokenDto)req.getAttribute("authData"), id);
+    }
 }

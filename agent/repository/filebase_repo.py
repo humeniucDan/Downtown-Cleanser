@@ -1,6 +1,7 @@
 import io
 import os
 
+import cv2
 import numpy as np
 from dotenv import load_dotenv
 import boto3
@@ -39,7 +40,8 @@ def get_object(key: str) -> np.ndarray:
 
         io.BytesIO(body)
         image = Image.open(io.BytesIO(body)).convert("RGB")
-        image_np = np.array(image)
+        image_np_rbg = np.array(image)
+        image_np = cv2.cvtColor(image_np_rbg, cv2.COLOR_RGB2BGR)
 
         return image_np
 

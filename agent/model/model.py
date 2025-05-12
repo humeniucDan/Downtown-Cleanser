@@ -3,13 +3,13 @@ import torch
 import numpy as np
 import cv2
 
-model = YOLO('../training/yolo_project/yolov8_custom2/weights/best.pt')
+model = YOLO('C:/BitStoneHackaton/agent/training/runs/detect/train2/weights/best.pt')
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model.to(device)
 
 
 def run_inference(image_np: np.ndarray):
-    results = model(image_np)[0]
+    results = model(image_np, conf=.07)[0]
 
     formatted_results = []
     annotated_image = image_np.copy()

@@ -33,6 +33,16 @@ public class FilebaseService {
             throw new IllegalArgumentException("File name cannot be empty.");
         }
 
+        try{
+            return uploadFile(file.getBytes(), uploadName);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public String uploadFile(byte[] file, String uploadName) {
+
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(uploadName)
@@ -40,29 +50,24 @@ public class FilebaseService {
 
         String cid = "";
 
-        try {
-            PutObjectResponse putResp = s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
-            System.out.println("File uploaded successfully.");
+        PutObjectResponse putResp = s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file));
+        System.out.println("File uploaded successfully.");
 
-            HeadObjectRequest headRequest = HeadObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(uploadName)
-                    .build();
+        HeadObjectRequest headRequest = HeadObjectRequest.builder()
+                .bucket(bucketName)
+                .key(uploadName)
+                .build();
 
-            HeadObjectResponse headResponse = s3Client.headObject(headRequest);
-            Map<String, String> userMetadata = headResponse.metadata();
+        HeadObjectResponse headResponse = s3Client.headObject(headRequest);
+        Map<String, String> userMetadata = headResponse.metadata();
 
-            cid = userMetadata.get("cid");
+        cid = userMetadata.get("cid");
 
-            if (cid == null || cid.isEmpty()) {
-                System.out.println("CID not found in metadata. Available metadata:");
-                userMetadata.forEach((key, value) -> System.out.println(key + " : " + value));
-            } else {
-                System.out.println("File Base CID: " + cid);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("!! ==== ERROR AWS: " + e.getMessage());
+        if (cid == null || cid.isEmpty()) {
+            System.out.println("CID not found in metadata. Available metadata:");
+            userMetadata.forEach((key, value) -> System.out.println(key + " : " + value));
+        } else {
+            System.out.println("File Base CID: " + cid);
         }
 
         return gatewayNme + cid;
