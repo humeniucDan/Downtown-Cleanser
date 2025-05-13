@@ -8,15 +8,22 @@ environment:
 
 dependencies:
   camera: ^0.11.1
+  file_picker: ^10.1.7
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
   font_awesome_flutter: ^10.8.0
+  geolocator: ^14.0.0
   google_fonts: ^6.2.1
   google_maps_flutter: ^2.12.1
+  google_maps_flutter_web: ^0.5.12
   http: ^1.4.0
+  intl: ^0.20.2
+  jwt_decoder: ^2.0.1
+  loading_animation_widget: ^1.3.0
   location: ^8.0.0
   share_plus: ^11.0.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +41,4 @@ flutter:
     - assets/institution_il.png
     - assets/user_il.png
     - assets/logo-500x500.png
+    - assets/map_style.json

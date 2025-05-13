@@ -50,7 +50,7 @@ class _ReportButtonState extends State<ReportButton> {
             textDirection: TextDirection.rtl,
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF3066),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),

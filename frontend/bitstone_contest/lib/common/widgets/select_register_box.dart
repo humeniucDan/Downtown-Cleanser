@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class RegisterBox extends StatelessWidget {
@@ -16,6 +17,7 @@ class RegisterBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
       decoration: BoxDecoration(
@@ -31,7 +33,7 @@ class RegisterBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 0.35 * screenWidth,
+            height: kIsWeb ? 0.35 * screenHeight : 0.35 * screenWidth,
             width: double.infinity,
             child: Image.asset(imagePath),
           ),
