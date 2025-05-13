@@ -20,7 +20,6 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         String path = request.getRequestURI();
         String context = request.getContextPath();
         String relativePath = path.substring(context.length());
@@ -30,14 +29,11 @@ public class AuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        if(request.getMethod().equals("OPTIONS")){
-            response.setStatus(HttpServletResponse.SC_OK);
-            return;
-        }
-
         Cookie wantedCookie = null;
         Cookie[] cookies = request.getCookies();
         if(cookies == null) {
+            System.out.println(relativePath);
+            System.out.println("cookies is null");
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Invalid or Missing Credentials");
             return;
         }
@@ -47,11 +43,12 @@ public class AuthFilter extends OncePerRequestFilter {
                 wantedCookie = cookie;
         }
         if (wantedCookie == null){
+            System.out.println("wantedCookie is null");
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied: Invalid or Missing Credentials");
             return;
         }
 
-        System.out.println(wantedCookie);
+        System.out.println("Wanted cookie: " + wantedCookie.getValue());
 
         UserTokenDto authDTO = null;
         try {

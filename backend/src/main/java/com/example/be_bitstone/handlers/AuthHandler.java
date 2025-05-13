@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -42,7 +44,10 @@ public class AuthHandler {
 
         try {
             String token = jwtGenerator.generateToken(existingUser);
-            rsp.addCookie(new Cookie("jwToken", token));
+            Cookie cookie = new Cookie("jwToken", token);
+            cookie.setPath("/");
+            rsp.addCookie(cookie);
+
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e){
             System.out.println(e.getMessage()   );

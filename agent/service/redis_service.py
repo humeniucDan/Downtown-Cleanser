@@ -1,15 +1,26 @@
+import os
+
 import asyncio
 import redis.asyncio as redis
+from dotenv import load_dotenv
 
-import model.model
+import model.model_geminiAPI
 from repository import filebase_repo, pg_repo
 
-HOST, PORT = 'localhost', 6379
+# HOST, PORT = 'localhost', 6379
 
 QUEUE = 'queue'
 ACK_QUEUE = 'queue:ack'
 
-client = redis.Redis(host=HOST, port=PORT, db=0)
+load_dotenv()
+
+client = redis.Redis(
+    host=os.getenv("REDIS_HOST"),
+    port=int(os.getenv("REDIS_PORT")),
+    decode_responses=False,
+    username=os.getenv("REDIS_USER"),
+    password=os.getenv("REDIS_PASSWORD"),
+)
 
 async def listener(stop_event: asyncio.Event):
     try:
@@ -32,7 +43,7 @@ async def process_message(data: bytes):
 
     image = filebase_repo.get_object('raw/' + filename)
 
-    results, annotated_image = model.model.run_inference(image)
+    results, annotated_image = model.model_geminiAPI.run_inference(image)
     annotated_image_url = filebase_repo.put_object('annotated/'+filename, annotated_image)
 
     pg_repo.insert_detections_pg(results, image_id)
@@ -44,7 +55,3 @@ async def main():
     stop_event = asyncio.Event()
     task = asyncio.create_task(listener(stop_event))
     await task
-
-
-if __name__ == '__main__':
-    asyncio.run(main())
