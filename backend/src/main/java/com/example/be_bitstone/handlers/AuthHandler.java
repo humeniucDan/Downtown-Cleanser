@@ -54,13 +54,9 @@ public class AuthHandler {
                     String.format("%s=%s; Path=/; HttpOnly; Secure; SameSite=None;",
                             cookie.getName(), cookie.getValue()));
 
-
-
             rsp.addCookie(cookie);
 
             ResponseEntity<String> retRsp = new ResponseEntity<>(token, HttpStatus.OK);
-//            retRsp.getHeaders().add("Set-Cookie", "jwToken=" + token);
-
             return retRsp;
         } catch (Exception e){
             System.out.println(e.getStackTrace());
