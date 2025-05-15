@@ -12,6 +12,7 @@ C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\UserSignup
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\UserTokenDto.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\entity\Authority.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\entity\Detection.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\entity\DetectionClass.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\entity\Image.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\entity\User.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\filter\AuthFilter.java
@@ -22,6 +23,7 @@ C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\handlers\Detec
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\handlers\ImageHandler.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\handlers\UserHandler.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\AuthorityRepository.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\DetectionClassRepository.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\DetectionRepository.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\ImageRepository.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\UserRepository.java

@@ -7,12 +7,19 @@ from dotenv import load_dotenv
 import model.model_geminiAPI
 from repository import filebase_repo, pg_repo
 
-# HOST, PORT = 'localhost', 6379
-
 QUEUE = 'queue'
 ACK_QUEUE = 'queue:ack'
 
 load_dotenv()
+
+client = redis.Redis(
+    host='redis-14499.c55.eu-central-1-1.ec2.redns.redis-cloud.com',
+    port=14499,
+    decode_responses=False,
+    username="default",
+    password="NnjQevcDgkzLHFRzG1kL4vFVBkH0BVfD",
+)
+
 
 # client = redis.Redis(
 #     host=os.getenv("REDIS_HOST"),
@@ -22,7 +29,10 @@ load_dotenv()
 #     password=os.getenv("REDIS_PASSWORD"),
 # )
 
-client = redis.Redis(host="localhost",port=6379)
+# client = redis.Redis(
+#     host=os.getenv("REDIS_HOST"),
+#     port=int(os.getenv("REDIS_PORT"))
+# )
 
 async def listener(stop_event: asyncio.Event):
     try:

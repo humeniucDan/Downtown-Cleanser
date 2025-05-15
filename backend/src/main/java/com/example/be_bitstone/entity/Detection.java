@@ -35,5 +35,4 @@ public class Detection {
     private Boolean isResolved = false;
     @Column(name = "resolved_at")
     private Date resolvedAt;
-
 }

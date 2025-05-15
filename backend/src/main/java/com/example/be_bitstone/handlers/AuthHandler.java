@@ -46,6 +46,16 @@ public class AuthHandler {
             String token = jwtGenerator.generateToken(existingUser);
             Cookie cookie = new Cookie("jwToken", token);
             cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            cookie.setSecure(true); // Required when SameSite=None
+
+            // Add manually SameSite attribute
+            rsp.setHeader("Set-Cookie",
+                    String.format("%s=%s; Path=/; HttpOnly; Secure; SameSite=None;",
+                            cookie.getName(), cookie.getValue()));
+
+
+
             rsp.addCookie(cookie);
 
             ResponseEntity<String> retRsp = new ResponseEntity<>(token, HttpStatus.OK);
