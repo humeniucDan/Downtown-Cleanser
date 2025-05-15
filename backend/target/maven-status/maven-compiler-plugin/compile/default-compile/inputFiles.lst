@@ -4,6 +4,7 @@ C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\Aut
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\DetectionController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\ImageController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\UserController.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\VersionController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\DowntownCleanserApplication.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\GpsDto.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\UserLoginDto.java
