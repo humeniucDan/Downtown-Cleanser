@@ -1,5 +1,9 @@
 import os
 import psycopg2
+from dotenv import load_dotenv
+from psycopg2.extras import RealDictCursor
+
+load_dotenv()
 
 def get_pg_connection():
     return psycopg2.connect(
@@ -10,6 +14,16 @@ def get_pg_connection():
         port=os.getenv("DB_PORT")
     )
 
+def get_detection_classes():
+    conn = get_pg_connection()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("SELECT id, name, type FROM detection_class;")
+            rows = cur.fetchall()
+            return rows
+    finally:
+        conn.close()
+
 
 def insert_detections_pg(detections, photo_id):
     conn = get_pg_connection()
@@ -17,11 +31,11 @@ def insert_detections_pg(detections, photo_id):
         for det in detections:
             cur.execute(
                 """
-                INSERT INTO detections (class_id, image_id, x1, x2, y1, y2, class_name)
+                INSERT INTO detections (detection_class_id, image_id, x1, x2, y1, y2, description)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
                 (det['class_id'], photo_id, int(det['x1']), int(det['x2']),
-                 int(det['y1']), int(det['y2']), det['class_name'])
+                 int(det['y1']), int(det['y2']), det['description'])
             )
         conn.commit()
 

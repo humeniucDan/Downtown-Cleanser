@@ -26,10 +26,11 @@ public class Detection {
     private Integer x2;
     @Column(name = "y2")
     private Integer y2;
-    @Column(name = "class_id", nullable = false)
-    private Integer classId;
-    @Column(name = "class_name")
-    private String className;
+    @ManyToOne()
+    @JoinColumn(name = "detection_class_id", nullable = false)
+    private DetectionClass detectionClass;
+    @Column(name = "description")
+    private String description;
     @Column(name = "is_resolved")
     private Boolean isResolved = false;
     @Column(name = "resolved_at")

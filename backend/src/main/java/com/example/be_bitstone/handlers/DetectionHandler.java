@@ -48,7 +48,7 @@ public class DetectionHandler {
         }
         Detection detection = optDetection.get();
         /// check if the authority is allowed to resolve such detections;
-        if(!authority.getAccessibleProblemClassIds().contains(detection.getClassId())){ // if the detection.classId is among the auth.AccessibleProblemClassIds
+        if(!authority.getAccessibleProblemClassIds().contains(detection.getDetectionClass().getId())){ // if the detection.classId is among the auth.AccessibleProblemClassIds
             return new ResponseEntity<>("Unqualified to resolve such an issue!", HttpStatus.UNAUTHORIZED);
         }
 

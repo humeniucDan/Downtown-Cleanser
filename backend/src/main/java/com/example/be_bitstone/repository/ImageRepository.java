@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("""
-    SELECT DISTINCT i
-      FROM Image i
-      JOIN FETCH i.detections d
-     WHERE d.classId = :classId
-    """)
+        SELECT DISTINCT i
+          FROM Image i
+          JOIN FETCH i.detections d
+         WHERE d.detectionClass.id = :classId
+        """)
     List<Image> findAllWithDetectionsClassId(@Param("classId") Integer classId);
 }

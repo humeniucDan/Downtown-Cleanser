@@ -40,18 +40,13 @@ public class RedisConfig {
     @Value("${spring.data.redis.username}")  // Use a more specific prefix
     private String redisUsername;
 
-
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisHost, redisPort);
-        config.setUsername(redisUsername);
-        config.setPassword(redisPassword);
+//        config.setUsername(redisUsername);
+//        config.setPassword(redisPassword);
         return new LettuceConnectionFactory(config);
     }
-
-    /**
-     * Configure the listener container, wiring the listener adapter and topic.
-     */
     @Bean
     public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
                                                    MessageListenerAdapter listenerAdapter) {
@@ -61,42 +56,13 @@ public class RedisConfig {
         container.addMessageListener(listenerAdapter, new PatternTopic(ACK_QUEUE));
         return container;
     }
-
-    /**
-     * Create a listener adapter that delegates to the RedisConsumerService bean's onMessage method.
-     * Important: inject the existing bean rather than creating a new instance.
-     */
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisConsumerService consumerService) {
         // 'onMessage' is the method name in RedisConsumerService
         return new MessageListenerAdapter(consumerService, "onMessage");
     }
-
-    /**
-     * Template for publishing and reading string messages.
-     */
     @Bean
     public StringRedisTemplate template(RedisConnectionFactory connectionFactory) {
         return new StringRedisTemplate(connectionFactory);
     }
-//    @Bean
-//    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-//        RedisTemplate<String, Object> template = new RedisTemplate<>();
-//        template.setConnectionFactory(redisConnectionFactory);
-//
-//        // Use StringRedisSerializer for keys
-//        template.setKeySerializer(new StringRedisSerializer());
-//        template.setHashKeySerializer(new StringRedisSerializer());
-//
-//        // Add serializers for value (if needed, e.g., Jackson2JsonRedisSerializer for JSON)
-//        // template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
-//        // template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
-//        // If you're using simple strings as values, you can use StringRedisSerializer:
-//        template.setValueSerializer(new StringRedisSerializer());
-//        template.setHashValueSerializer(new StringRedisSerializer());
-//
-//
-//        template.afterPropertiesSet(); // Important: Initialize the template
-//        return template;
-//    }
 }

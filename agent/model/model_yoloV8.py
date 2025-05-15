@@ -26,7 +26,7 @@ def run_inference(image_np: np.ndarray):
             'x2': x2,
             'y2': y2,
             'class_id': class_id,
-            'class_name': class_name
+            "description": 'N\A'
         })
 
         cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=2)

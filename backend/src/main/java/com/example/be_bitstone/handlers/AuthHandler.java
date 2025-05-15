@@ -49,11 +49,12 @@ public class AuthHandler {
             rsp.addCookie(cookie);
 
             ResponseEntity<String> retRsp = new ResponseEntity<>(token, HttpStatus.OK);
-            retRsp.getHeaders().add("Set-Cookie", "jwToken=" + token);
+//            retRsp.getHeaders().add("Set-Cookie", "jwToken=" + token);
 
             return retRsp;
         } catch (Exception e){
-            System.out.println(e.getMessage()   );
+            System.out.println(e.getStackTrace());
+            System.out.println(e.getMessage());
             return new ResponseEntity<>("Error logging in!", HttpStatus.BAD_REQUEST);
         }
     }

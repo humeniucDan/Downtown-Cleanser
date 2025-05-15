@@ -7,6 +7,8 @@ from PIL import Image
 import json
 import dotenv
 
+import repository.pg_repo
+
 # --- Configuration ---
 # Securely load your API key (replace with your actual key or use environment variables)
 # For example, using an environment variable:
@@ -23,16 +25,14 @@ genai.configure(api_key=API_KEY)
 prompt = """
 Analyze the provided image to identify the following urban issues:
 issue_id type
-1        Illegally parked vehicles (blocking sidewalks, hydrants, crosswalks, etc.) (VERY IMPORTANT)
-2        Graffiti
-3        Misplaced garbage bags or overflowing bins
-4        Wild life danger
-5        Biological dangers (animal carcases, etc.)
-6        Potholes
-7        Damaged building facades
-8        Damaged Street signs
+         
+"""
 
-For EACH identified issue, provide the following information in a STRICT JSON format list:
+detection_classes = repository.pg_repo.get_detection_classes()
+for detection_class in detection_classes:
+    prompt += str(detection_class['id']) + '         ' + detection_class['name'] + '\n'
+
+prompt += """
 0.  `issue_id`
 1.  `issue_type`: A string describing the type of issue found (e.g., "graffiti", "illegal_parking", "misplaced_garbage").
 2.  `description`: A brief text description of the specific issue found.
@@ -55,6 +55,8 @@ Do not include any text before or after the JSON list itself. Just output the JS
 model = genai.GenerativeModel('models/gemini-2.0-flash') # <-- *** This is the main change ***
 
 def run_inference(image_np: np.ndarray):
+    print(prompt)
+
     annotated_image = image_np.copy()
     img_pil = Image.fromarray(image_np) # Use PIL Image for Gemini
     image_height, image_width = image_np.shape[:2] # Get image dimensions for denormalization
@@ -132,7 +134,8 @@ def run_inference(image_np: np.ndarray):
                     'x2': x2,
                     'y2': y2,
                     'class_id': class_id,
-                    'class_name': class_name
+                    'class_name': class_name,
+                    'description': description
                 })
 
                 cv2.rectangle(annotated_image, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=2)
