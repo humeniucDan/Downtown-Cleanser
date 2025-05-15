@@ -52,7 +52,8 @@ Do not include any text before or after the JSON list itself. Just output the JS
 
 # --- Select the Model ---
 # Use gemini-pro-vision for multimodal input
-model = genai.GenerativeModel('models/gemini-2.0-flash') # <-- *** This is the main change ***
+model = genai.GenerativeModel('models/gemini-2.0-flash')
+# model = genai.GenerativeModel('models/gemini-2.5-pro-preview-05-06')
 
 def run_inference(image_np: np.ndarray):
     print(prompt)
