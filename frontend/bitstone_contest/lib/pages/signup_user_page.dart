@@ -24,12 +24,15 @@ class _SignupUserPageState extends State<SignupUserPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  final TextEditingController _repCodeController = TextEditingController();
+
   //The signup function that uses the AuthService
   Future<void> _handleSignup() async {
     final fullName = _nameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
+    final repCode = _repCodeController.text.trim();
 
     if (fullName.isEmpty ||
         email.isEmpty ||
@@ -52,6 +55,7 @@ class _SignupUserPageState extends State<SignupUserPage> {
       fullName: fullName,
       email: email,
       password: password,
+      repCode: repCode.isNotEmpty ? repCode : null,
     );
 
     final authService = AuthService();
@@ -134,6 +138,14 @@ class _SignupUserPageState extends State<SignupUserPage> {
                                 controller: _emailController,
                                 label: 'Email',
                                 placeholder: "example@gmail.com",
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 18),
+                              child: CustomInputField(
+                                controller: _repCodeController,
+                                label: 'Representative Code (Optional)',
+                                placeholder: "Code given from institution",
                               ),
                             ),
                             Padding(

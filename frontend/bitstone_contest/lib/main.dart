@@ -1,5 +1,6 @@
 import 'package:bitstone_contest/pages/history_page.dart';
 import 'package:bitstone_contest/pages/login_page.dart';
+import 'package:bitstone_contest/pages/my_profile_page.dart';
 import 'package:bitstone_contest/pages/show_issues_page.dart';
 import 'package:bitstone_contest/pages/signup_selection_page.dart';
 import 'package:bitstone_contest/pages/signup_company_page.dart';
@@ -16,7 +17,7 @@ import 'package:flutter/foundation.dart';
 late List<CameraDescription> _cameras;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // This is important!
+  WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     _cameras = await availableCameras();
   } // Load cameras BEFORE app starts
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         '/signup_company': (context) => SignupCompanyPage(),
         '/report_history': (context) => HistoryPage(),
         '/login': (context) => LoginPage(),
+        '/profile': (context) => MyProfilePage(),
       },
     );
   }

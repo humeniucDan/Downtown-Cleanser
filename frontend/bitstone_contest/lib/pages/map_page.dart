@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:bitstone_contest/common/widgets/custom_report_button.dart';
 import 'package:bitstone_contest/models/photo_model.dart';
 import 'package:bitstone_contest/pages/view_a_report_page.dart';
 import 'package:bitstone_contest/services/auth_service.dart';
 import 'package:bitstone_contest/services/user_service.dart';
+import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,9 +28,14 @@ class _MapPageState extends State<MapPage> {
   //StreamSubscription<LocationData>? locationSubscription;
   Set<Marker> _markers = {};
   List<PhotoModel> _userPhotos = [];
+  File? _selectedImage;
 
   Future<void> _loadUserPhotos() async {
-    //mock json for testing purpose
+    setState(() {
+      _userPhotos.clear();
+      _markers.clear();
+    });
+
     final mockJson = {
       "id": 1,
       "postedAt": "2025-05-10T22:37:45.483+00:00",
@@ -142,6 +150,7 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.sizeOf(context);
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -198,6 +207,9 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, '/profile');
+              },
               title: const Text(
                 "My profile",
                 style: TextStyle(color: Color.fromARGB(255, 245, 78, 123)),
@@ -223,6 +235,16 @@ class _MapPageState extends State<MapPage> {
               },
             ),
           ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 64),
+        child: FloatingActionButton(
+          onPressed: () {
+            _loadUserPhotos();
+          },
+          child: Icon(Icons.refresh, color: Colors.white, weight: 32),
+          backgroundColor: Color.fromARGB(255, 245, 78, 123),
         ),
       ),
       body: Stack(
