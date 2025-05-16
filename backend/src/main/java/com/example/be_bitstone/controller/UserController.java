@@ -40,4 +40,10 @@ public class UserController {
         Long userId = ((UserTokenDto)req.getAttribute("authData")).getId();
         return userHandler.getById(userId);
     }
+
+    @GetMapping("/ranked")
+    public ResponseEntity<?> getAllUsersRanked(){
+        /// TODO: introduce pagination, also add a feature where users can chose to have their profile public or private
+        return userHandler.getAllRanked();
+    }
 }

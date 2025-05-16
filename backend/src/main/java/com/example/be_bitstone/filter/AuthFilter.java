@@ -22,7 +22,8 @@ public class AuthFilter extends OncePerRequestFilter {
             "/login",
             "/signup",
             "/ver",
-            "/authority/register"
+            "/authority/register",
+            "/authority/code"
     );
     @Autowired
     private JWTParser jwtParser;
@@ -45,7 +46,7 @@ public class AuthFilter extends OncePerRequestFilter {
         String context = request.getContextPath();
         String relativePath = path.substring(context.length());
 
-        if(relativePath.equals("/login") || relativePath.equals("/signup") || relativePath.equals("/ver")){
+        if(allowedPaths.contains(relativePath)){
             filterChain.doFilter(request, response);
             return;
         }

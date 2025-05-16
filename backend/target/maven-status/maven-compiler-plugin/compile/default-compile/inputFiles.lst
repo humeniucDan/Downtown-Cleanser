@@ -1,11 +1,14 @@
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\config\FilebaseConfig.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\config\RedisConfig.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\AuthController.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\AuthorityController.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\DetectionClassController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\DetectionController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\ImageController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\UserController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\controller\VersionController.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\DowntownCleanserApplication.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\AuthorityAuthData.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\GpsDto.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\UserLoginDto.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\dto\UserSignupDto.java
@@ -28,6 +31,7 @@ C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\Det
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\ImageRepository.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\repository\UserRepository.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\service\AuthorityService.java
+C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\service\DetectionClassService.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\service\DetectionService.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\service\FilebaseService.java
 C:\BitStoneHackaton\backend\src\main\java\com\example\be_bitstone\service\ImageService.java

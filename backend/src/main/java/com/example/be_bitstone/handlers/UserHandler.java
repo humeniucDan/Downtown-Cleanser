@@ -44,4 +44,12 @@ public class UserHandler {
             return new ResponseEntity<>("Error retrieving all users!", HttpStatus.BAD_REQUEST);
         }
     }
+    public ResponseEntity<?> getAllRanked(){
+        try{
+            return new ResponseEntity<>(userService.findAllByDescScore(), HttpStatus.OK);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>("Error retrieving all users!", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
