@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ImageHandler {
@@ -55,7 +56,11 @@ public class ImageHandler {
         return new ResponseEntity<>("Uploaded and send file successfully!", HttpStatus.OK);
     }
 
-    public ResponseEntity<?> getImagesWithDetectionClassId(Integer classId){
-        return new ResponseEntity<>(imageService.findAllWithDetectionsClassId(classId), HttpStatus.OK);
+//    public ResponseEntity<?> getImagesWithDetectionClassId(Integer classId){
+//        return new ResponseEntity<>(imageService.findAllWithDetectionsClassId(classId), HttpStatus.OK);
+//    }
+
+    public ResponseEntity<?> getImagesWithDetectionClassId(List<Integer> classIds){
+        return new ResponseEntity<>(imageService.findAllWithDetectionsClassIds(classIds), HttpStatus.OK);
     }
 }

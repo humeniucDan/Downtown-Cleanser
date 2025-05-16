@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/image")
 public class ImageController {
@@ -34,8 +36,8 @@ public class ImageController {
         return imageHandler.uploadImageForProcessing(image, userId, gpsData);
     }
 
-    @GetMapping("/detections/{classId}")
-    public ResponseEntity<?> getImagesWithDetectionClassId(@PathVariable Integer classId){
-        return imageHandler.getImagesWithDetectionClassId(classId);
+    @GetMapping("/detections/{classIds}")
+    public ResponseEntity<?> getImagesWithDetectionClassId(@PathVariable List<Integer> classIds){
+        return imageHandler.getImagesWithDetectionClassId(classIds);
     }
 }

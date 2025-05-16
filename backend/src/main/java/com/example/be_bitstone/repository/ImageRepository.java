@@ -12,7 +12,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
         SELECT DISTINCT i
           FROM Image i
           JOIN FETCH i.detections d
-         WHERE d.detectionClass.id = :classId
+         WHERE d.detectionClass.id IN :classIds
         """)
-    List<Image> findAllWithDetectionsClassId(@Param("classId") Integer classId);
+    List<Image> findAllWithDetectionsClassIds(@Param("classIds") List<Integer> classIds);
 }
