@@ -1,7 +1,5 @@
 package com.example.be_bitstone.entity;
 
-import com.example.be_bitstone.dto.GpsDto;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -27,6 +25,9 @@ public class Authority {
     private String email;
     @Column(name = "hq_address")
     private String hqAddress;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "cui", nullable = false, unique = true)
+    private String cui;
     @JsonIgnore
     @Column(name = "rep_code", nullable = false, unique = true)
     private String repCode;
@@ -35,5 +36,5 @@ public class Authority {
     private String password;
     @Column(name = "accessible_problem_class_id")
     @ElementCollection
-    private List<Integer> accessibleProblemClassIds;
+    private List<Long> accessibleProblemClassIds;
 }

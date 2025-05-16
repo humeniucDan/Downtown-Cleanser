@@ -2,7 +2,6 @@ package com.example.be_bitstone.service;
 
 import com.example.be_bitstone.entity.Authority;
 import com.example.be_bitstone.repository.AuthorityRepository;
-import com.example.be_bitstone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +23,13 @@ public class AuthorityService {
 
     public Authority save(Authority authority){
         return authorityRepository.save(authority);
+    }
+
+    public Optional<Authority> findById(Long id) {
+        return authorityRepository.findById(id);
+    }
+
+    public Optional<Authority> findByCui(String cui) {
+        return authorityRepository.findByCui(cui);
     }
 }

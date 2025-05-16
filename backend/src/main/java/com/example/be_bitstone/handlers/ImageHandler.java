@@ -1,8 +1,11 @@
 package com.example.be_bitstone.handlers;
 
 import com.example.be_bitstone.dto.GpsDto;
+import com.example.be_bitstone.dto.UserTokenDto;
+import com.example.be_bitstone.entity.Authority;
 import com.example.be_bitstone.entity.Image;
 import com.example.be_bitstone.entity.User;
+import com.example.be_bitstone.service.AuthorityService;
 import com.example.be_bitstone.service.FilebaseService;
 import com.example.be_bitstone.service.ImageService;
 import com.example.be_bitstone.service.RedisProducerService;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageHandler {
@@ -25,6 +29,8 @@ public class ImageHandler {
     private RedisProducerService redisProducerService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private AuthorityService authorityService;
 
     public ResponseEntity<String> uploadImageForProcessing(MultipartFile image, Long userId, GpsDto gpsData){
         String fileHash = FileHasher.hashMultipartFile(image) + ".png";
@@ -56,11 +62,20 @@ public class ImageHandler {
         return new ResponseEntity<>("Uploaded and send file successfully!", HttpStatus.OK);
     }
 
-//    public ResponseEntity<?> getImagesWithDetectionClassId(Integer classId){
-//        return new ResponseEntity<>(imageService.findAllWithDetectionsClassId(classId), HttpStatus.OK);
-//    }
-
-    public ResponseEntity<?> getImagesWithDetectionClassId(List<Integer> classIds){
+    public ResponseEntity<?> getImagesWithDetectionClassId(List<Long> classIds){
         return new ResponseEntity<>(imageService.findAllWithDetectionsClassIds(classIds), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getImagesWithResolvableDetection(UserTokenDto authData) {
+        Optional<Authority> optAuthority = authorityService.findById(authData.getRepAuthorityId());
+        if(optAuthority.isEmpty()){
+            return new ResponseEntity<>("Authority not found!", HttpStatus.BAD_REQUEST);
+        }
+        Authority authority = optAuthority.get();
+
+        return new ResponseEntity<>(
+                imageService.findAllWithDetectionsClassIds(authority.getAccessibleProblemClassIds()),
+                HttpStatus.OK
+        );
     }
 }

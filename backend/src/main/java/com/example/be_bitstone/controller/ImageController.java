@@ -37,7 +37,12 @@ public class ImageController {
     }
 
     @GetMapping("/detections/{classIds}")
-    public ResponseEntity<?> getImagesWithDetectionClassId(@PathVariable List<Integer> classIds){
+    public ResponseEntity<?> getImagesWithDetectionClassId(@PathVariable List<Long> classIds){
         return imageHandler.getImagesWithDetectionClassId(classIds);
+    }
+
+    @GetMapping("/detections/resolvable")
+    public ResponseEntity<?> getImagesWithResolvableDetection(HttpServletRequest req){
+        return imageHandler.getImagesWithResolvableDetection(((UserTokenDto)req.getAttribute("authData")));
     }
 }

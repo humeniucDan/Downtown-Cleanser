@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
     Optional<Authority> findByRepCode(String repCode);
+    Optional<Authority> findByCui(String cui);
 }

@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     private AuthHandler authHandler;
-    @Autowired
-    private AuthorityHandler authorityHandler;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(HttpServletResponse rsp, @RequestBody UserLoginDto userAuthData){
@@ -31,9 +29,5 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserSignupDto user){
         return authHandler.signup(user);
-    }
-    @PostMapping ("authority/register")
-    public ResponseEntity<?> registerAuthority(@RequestBody Authority authority){
-        return authorityHandler.registerAuthority(authority);
     }
 }

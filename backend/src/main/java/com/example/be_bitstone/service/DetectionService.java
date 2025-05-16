@@ -34,4 +34,13 @@ public class DetectionService {
 
         return Optional.of(detection);
     }
+
+    public Optional<Detection> markDetectionResolved(Detection detection, Long id) {
+        detection.setIsResolved(true);
+        detection.setResolvedAt(new Date());
+        ///  TODO: also add the resolvedBy field in order to track reps work
+        detectionRepository.save(detection);
+
+        return Optional.of(detection);
+    }
 }

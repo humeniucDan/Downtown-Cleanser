@@ -47,14 +47,16 @@ public class DetectionHandler {
             return new ResponseEntity<>("No such detection!", HttpStatus.BAD_REQUEST);
         }
         Detection detection = optDetection.get();
+        System.out.println("Authority accessible problems: " + authority.getAccessibleProblemClassIds());
+        System.out.println("Detection: " + detection);
         /// check if the authority is allowed to resolve such detections;
         if(!authority.getAccessibleProblemClassIds().contains(detection.getDetectionClass().getId())){ // if the detection.classId is among the auth.AccessibleProblemClassIds
             return new ResponseEntity<>("Unqualified to resolve such an issue!", HttpStatus.UNAUTHORIZED);
         }
 
-        optDetection = detectionService.markDetectionResolved(id);
+        optDetection = detectionService.markDetectionResolved(detection, id);
         if(optDetection.isEmpty()){
-            return new ResponseEntity<>("No such detection!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Could not mark detection as solved!", HttpStatus.BAD_REQUEST);
         }
         detection = optDetection.get();
 

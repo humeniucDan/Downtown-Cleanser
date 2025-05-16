@@ -14,5 +14,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
           JOIN FETCH i.detections d
          WHERE d.detectionClass.id IN :classIds
         """)
-    List<Image> findAllWithDetectionsClassIds(@Param("classIds") List<Integer> classIds);
+    List<Image> findAllWithDetectionsClassIds(@Param("classIds") List<Long> classIds);
 }

@@ -17,7 +17,7 @@ public class ImageService {
         return imageRepository.save(image);
     }
 
-    public List<Image> findAllWithDetectionsClassIds(List<Integer> classIds){
+    public List<Image> findAllWithDetectionsClassIds(List<Long> classIds){
         return imageRepository.findAllWithDetectionsClassIds(classIds);
     }
 

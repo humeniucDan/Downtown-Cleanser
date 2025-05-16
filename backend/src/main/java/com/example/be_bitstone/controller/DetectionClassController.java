@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("detection_classes")
-public class DetectionClassController {
-    @Autowired
-    private DetectionClassService detectionClassService;
-
-    @GetMapping
-    public ResponseEntity<?> findAll() {
-        return new ResponseEntity<>(detectionClassService.findAll(), HttpStatus.OK);
-    }
-}
+//@RestController
+//@RequestMapping("detection_classes")
+//public class DetectionClassController {
+//    @Autowired
+//    private DetectionClassService detectionClassService;
+//
+//
+//}
